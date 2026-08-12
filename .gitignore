@@ -3,6 +3,7 @@
 # (논문 PDF, 집필 중인 교재, 진단 결과)는 여기 올라가지 않는다.
 /*
 !/.gitignore
+!/LICENSE
 !/README.md
 !/CLAUDE.md
 !/PHASE1_PROBE_GUIDE.md

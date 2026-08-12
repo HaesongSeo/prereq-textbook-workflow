@@ -77,7 +77,7 @@ L0은 제외, L1은 진술과 출처, L2는 논문에서의 역할까지, L3은 
 ## 시작하기
 
 ```sh
-git clone git@github.com:HaesongSeo/prereq-textbook-workflow.git Study
+git clone https://github.com/HaesongSeo/prereq-textbook-workflow.git Study
 cd Study
 cp -R Source "내 논문 이름"
 ```
@@ -97,3 +97,7 @@ cp -R Source "내 논문 이름"
 
 관리 문서와 대화는 한국어로 쓰고, `tex/` 아래 교재는 기본값이 영어다. 이 설정은
 프로젝트마다 바꿀 수 있다.
+
+## 라이선스
+
+MIT. `LICENSE` 참조.
