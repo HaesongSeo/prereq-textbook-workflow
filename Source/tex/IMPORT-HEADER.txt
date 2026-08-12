@@ -1,0 +1,30 @@
+이 블록을 import한 .tex 파일의 **맨 첫 줄부터** 붙인다. 주석이므로 인쇄되지
+않는다. `import-check.sh`가 `IMPORTED CHAPTER` 문자열의 존재를 확인하므로 그
+줄은 지우지 않는다.
+
+`ADAPTED:` 목록이 이 블록의 핵심이다. 원본이 고쳐져 다시 가져올 때, 그 목록이
+그대로 조리법이 된다. 「손봤다」가 아니라 **무엇을 무엇으로** 바꿨는지 적는다.
+
+--------------------------------- 여기부터 ---------------------------------
+
+% ===========================================================================
+% IMPORTED CHAPTER -- a fork, not a copy.
+%
+% Origin : ../../<프로젝트>/tex/chapters/<파일>.tex
+% Forked : <YYYY-MM-DD>, from the revision recorded in tex/IMPORTS.
+%
+% The origin refers into its own book and cites its own target paper, so it
+% could not be taken verbatim. Everything changed on the way in is listed
+% below; nothing else was touched.
+%
+% ADAPTED:
+%   - \cite{<원본 키>}  ->  <이 책에서의 대응>      (목표 논문이 다르다)
+%   - \ref{<원본 라벨>} ->  \ref{<이 책의 라벨>}   (또는: 문장을 자립시켰다)
+%   - \<원본 매크로>    ->  \<이 책의 매크로>
+%   - chapter header rewritten: what this supports is different here
+%
+% AUTHORITY: the origin is authoritative for the mathematics. If you find an
+% error here, fix it THERE first and re-import; otherwise the two write-ups
+% diverge and neither is trustworthy. Only the ADAPTED list above is meant to
+% differ. Run `sh tex/import-check.sh` to see whether the origin has moved.
+% ===========================================================================
