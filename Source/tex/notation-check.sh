@@ -1,10 +1,11 @@
 #!/bin/sh
 # Find places where a notation macro's expansion was typed out by hand.
 #
-# Why: notation.sty exists so that the whole text follows DNV's notation from
-# one place.  A hand-written \mathcal{O} or \mathbb{P} still typesets, so
-# nothing complains, but it drifts out of reach of any later change and shows
-# up as an inconsistency to the reader.  check.sh cannot see this.
+# Why: notation.sty exists so that the whole text follows the target paper's
+# notation from one place.  A hand-written \mathcal{O} or \mathbb{P} still
+# typesets, so nothing complains, but it drifts out of reach of any later
+# change and shows up as an inconsistency to the reader.  check.sh cannot
+# see this.
 #
 # This DETECTS ONLY -- it never rewrites.  Some hits are legitimate (the
 # macro definitions themselves; a deliberate contrast with another paper's

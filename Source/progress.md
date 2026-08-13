@@ -58,7 +58,7 @@
 | 스크립트 | 대상 | 검사 항목 |
 |---|---|---|
 | `sh tex/check.sh` | `tex/` | 비ASCII, clean-room 빌드, 로그(`grep -a`) |
-| `sh md-check.sh` | `CLAUDE.md`, `PHASE1_PROBE_GUIDE.md`, `spec.md`, `background.md`, `progress.md` 등 | ① 백틱 밖 프로젝트 매크로 ② 표 안 수식의 세로줄 ③ 표 열 개수 ④ 한 줄에서 안 닫힌 인라인 수식 ⑤ 상호참조를 `tex/**/*.aux`와 대조 ⑥ `\uXXXX` 이스케이프 누출 |
+| `sh md-check.sh` | `CLAUDE.md`, `PHASE1_PROBE_GUIDE.md`, `spec.md`, `background.md`, `progress.md` 등 | ① 백틱 밖 프로젝트 매크로 ② 표 안 수식의 세로줄 ③ 표 열 개수 ④ 한 줄에서 안 닫힌 인라인 수식 ⑤ 상호참조를 `tex/**/*.aux`와 대조 ⑥ `\uXXXX` 이스케이프 누출 ⑦ 「챕터 진행 현황」 표의 승인 열 ↔ 승인 로그 |
 | `sh tex/notation-check.sh` | `tex/` 본문 | `notation.sty` 매크로의 전개형을 손으로 쓴 곳 |
 | `sh tex/import-check.sh` | `tex/IMPORTS` | 다른 프로젝트에서 가져온 장의 **원본이 바뀌었는가** |
 
@@ -81,6 +81,10 @@
 | Ch | 제목 | 출처 | 집필 | 검사 통과 | 컴파일 | 승인 |
 |---|---|---|---|---|---|---|
 | 01 | | 신규 | ☐ | ☐ | ☐ | ☐ |
+
+> **승인을 받으면 이 표의 「승인」 열과 위의 「승인 로그」를 *같은 턴에 함께*
+> 채운다.** `md-check.sh`에 항목 ⑦로 대조를 넣었다.
+> 규칙을 글로만 적어 두는 것으로는 막히지 않았다는 것이 그 경위다.
 
 > 「출처」는 **신규** 또는 **import: `<프로젝트>/<파일>`**. import한 장은
 > `tex/IMPORTS`에도 등록하고 `sh tex/import-check.sh`로 표류를 감시한다

@@ -121,7 +121,43 @@ LABEL = {'macro': 'project macro outside backticks',
          'table': 'table column count',
          'math' : 'inline math not closed on its line',
          'xref' : 'cross-reference does not match the .aux files          ',
-         'escape': 'leaked \\uXXXX escape'}
+         'escape': 'leaked \\uXXXX escape',
+         'approval': 'chapter table vs approval log'}
+
+
+# ---------------------------------------------------------------- approvals
+# The "chapter status" table and the "approval log" of progress.md record the
+# same fact in two places, and nothing else compares them: the agreement of two
+# tables is a matter of meaning, not of syntax.  In one project they drifted
+# twice -- a chapter was approved, the log said so, and the table's approval
+# column stayed unticked -- and both times a human caught it rather than a
+# checker.  So we check it here.
+#
+# Rule: chapter NN is ticked in the status table  <=>  the approval log has a
+# row naming **ChNN** and marked as approved.
+#
+# Both tables are part of the template, so this applies to every project.  The
+# empty placeholder rows of a fresh project match neither pattern and are
+# silently ignored.
+import re as _re
+_prog = 'progress.md'
+if os.path.exists(_prog):
+    _txt = open(_prog, encoding='utf-8').read()
+    _ticked, _logged = set(), set()
+    for _l in _txt.split('\n'):
+        _m = _re.match(r'\|\s*(\d{2})\s*\|\s*[A-Z].*\|\s*(.+?)\s*\|\s*$', _l)
+        if _m and ('신규' in _l or 'import:' in _l):
+            if '승인' in _m.group(2):
+                _ticked.add(_m.group(1))
+        _m2 = _re.search(r'\*\*Ch(\d{2})\*\*', _l)
+        if _m2 and '| 승인 |' in _l:
+            _logged.add(_m2.group(1))
+    for _ch in sorted(_ticked - _logged):
+        issues.append(('approval', f'{_prog}',
+                       f'Ch{_ch} is ticked in the chapter table but has no approval-log row'))
+    for _ch in sorted(_logged - _ticked):
+        issues.append(('approval', f'{_prog}',
+                       f'Ch{_ch} is in the approval log but not ticked in the chapter table'))
 
 print('== md files checked ==')
 for f in MD:
@@ -130,7 +166,7 @@ print(f'== .aux files read: {len(AUX)}; numbered items: {len(num2lab)} ==')
 if not AUX:
     print('  WARNING: no .aux found -- run tex/check.sh first, xrefs unchecked')
 
-for kind in ('macro', 'pipe', 'table', 'math', 'xref', 'escape'):
+for kind in ('macro', 'pipe', 'table', 'math', 'xref', 'escape', 'approval'):
     hits = [x for x in issues if x[0] == kind]
     print(f'  {LABEL[kind]:<46} {len(hits)}')
     for _, where, what in hits:
