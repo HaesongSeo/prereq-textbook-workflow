@@ -1,0 +1,35 @@
+% refs.bib -- bibliography.  Only entries actually cited belong here
+% (CLAUDE.md, Phase 3).
+%
+% KEYS: follow the alpha labels of the target paper's own bibliography, so the
+% reader can match our citations against the paper directly.  Record the
+% decision in spec.md, "confirmed conventions".
+%
+% ASCII ONLY.  Everything under tex/ must be ASCII (see CLAUDE.md).
+%
+% BEWARE: bibtex has no comment character.  Lines outside an entry are
+% ignored, but an "at" sign anywhere -- including in prose like this -- starts
+% an entry and derails the parse.  Never write the entry types with their
+% sigil in a comment; that is why they appear bare below.
+%
+% TITLE BRACING.  bibtex's alpha style lowercases the title of article,
+% incollection and misc entries, and it does NOT protect math: "On $L^2$
+% extension" prints as "On $l^2$ extension".  No warning, no error, and
+% tex/check.sh cannot see it -- only reading main.bbl does.  Wrap math and
+% proper nouns in braces: {$L^2$}, {O}hsawa--{T}akegoshi.  Book titles are
+% not lowercased.  Read main.bbl once whenever a chapter is finalised.
+%
+% NO working notes in the note field -- the alpha style PRINTS it, and once
+% put twelve pages of our acquisition notes into the final PDF.  Acquisition
+% status lives in refs/NOTES.md.  Only what helps the reader chase a citation
+% belongs in note (an arXiv identifier; how the target paper misnames the
+% entry).
+
+@book{Har77,
+  author    = {Robin Hartshorne},
+  title     = {Algebraic Geometry},
+  series    = {Graduate Texts in Mathematics},
+  volume    = {52},
+  publisher = {Springer},
+  year      = {1977}
+}

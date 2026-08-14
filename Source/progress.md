@@ -58,8 +58,8 @@
 | 스크립트 | 대상 | 검사 항목 |
 |---|---|---|
 | `sh tex/check.sh` | `tex/` | 비ASCII, clean-room 빌드, 로그(`grep -a`) |
-| `sh md-check.sh` | `CLAUDE.md`, `PHASE1_PROBE_GUIDE.md`, `spec.md`, `background.md`, `progress.md` 등 | ① 백틱 밖 프로젝트 매크로 ② 표 안 수식의 세로줄 ③ 표 열 개수 ④ 한 줄에서 안 닫힌 인라인 수식 ⑤ 상호참조를 `tex/**/*.aux`와 대조 ⑥ `\uXXXX` 이스케이프 누출 ⑦ 「챕터 진행 현황」 표의 승인 열 ↔ 승인 로그 |
-| `sh tex/notation-check.sh` | `tex/` 본문 | `notation.sty` 매크로의 전개형을 손으로 쓴 곳 |
+| `sh md-check.sh` | 루트의 공유 정책 파일 + **프로젝트 아래 모든 `.md`** (`refs/NOTES.md` 포함) | ① 백틱 밖 프로젝트 매크로 ② 표 안 수식의 세로줄 ③ 표 열 개수 ④ 한 줄에서 안 닫힌 인라인 수식 ⑤ 우리 항목 번호를 `tex/**/*.aux`와 대조 (한국어 「`chNN` 비고 N.N」과 영어 약식 「`ChNN` Rmk N.N」 두 형태 모두) ⑥ `\uXXXX` 이스케이프 누출 ⑦ 「챕터 진행 현황」·「논문 정독 현황」의 승인 열 ↔ 승인 로그 |
+| `sh tex/notation-check.sh` | **`tex/` 아래 모든 `.tex`** (머리말·부록 포함) | `notation.sty` 매크로의 전개형을 손으로 쓴 곳 |
 | `sh tex/import-check.sh` | `tex/IMPORTS` | 다른 프로젝트에서 가져온 장의 **원본이 바뀌었는가** |
 
 **프로젝트별로 하나 더 만든다: 원문 정리 번호 대조기.** 본문이 텍스트로 적은
@@ -69,6 +69,17 @@
 찾았고, 이 스크립트를 처음 돌리자 4번째가 나왔다.
 
 ## 빌드 검증 규칙
+
+`tex/`에는 **그 자체로 빌드되는 뼈대**가 들어 있다 (`main.tex`, `preamble.sty`,
+`notation.sty`, `refs.bib`). 복사한 직후 `sh tex/check.sh`를 돌려 통과를 확인한
+뒤 시작한다 — 이후 무엇이 깨지든 우리가 넣은 것이 원인이다. 먼저 채울 것은
+`main.tex`의 제목 블록(`spec.md`의 서지 그대로)과 `notation.sty`이고, 장은
+승인될 때마다 `main.tex`의 `\include` 줄을 하나씩 살린다. **첫 `\cite`가
+생기면 `main.tex`의 `\nocite{*}`를 지운다.**
+
+빌드 부산물(`.aux`, `.log`, `.toc`, `.bbl` 등)은 **지우지 않는다.**
+`md-check.sh`가 `.aux`를 읽고, 분량 실측이 `main.toc`와 `main.log`를 읽는다.
+저장소에 올라가지 않도록 `.gitignore`에만 넣어 둔다.
 
 **챕터를 확정하기 전 반드시 `sh tex/check.sh`를 돌린다.** 임기응변 `grep`으로
 로그를 확인하지 않는다. 사유는 `CLAUDE.md` 검증 규칙 참조 (비ASCII 한 글자가

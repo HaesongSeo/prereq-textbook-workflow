@@ -38,17 +38,22 @@ for n, e in sorted(macros.items()):
     print('   \\%-8s ->  %s' % (n, e))
 print()
 
-# Deliberate exceptions, reviewed 2026-08-08.  Keyed by (file, macro) with the
-# reason, so that a clean run means "no new drift" rather than "nothing to
-# report ever".  Adding a line here is a decision, not a silencing.
+# Deliberate exceptions.  Keyed by (file, macro) with the reason, so that a
+# clean run means "no new drift" rather than "nothing to report ever".  Adding
+# a line here is a decision, not a silencing.
 ACCEPTED = {
- # ('ch07-demailly-semple-tower.tex', 'tX'):
+ # ('ch07-<slug>.tex', 'tX'):
  #   'the subscript sits outside the tilde, as the paper prints it',
 }
 
 hits = ok = 0
 accepted_seen = set()
-for f in sorted(glob.glob('tex/chapters/*.tex')) + sorted(glob.glob('tex/paper/*.tex')):
+# Scope: EVERY .tex under tex/, not just chapters/ and paper/.  The front
+# matter and appendices written in Phase 6 live directly under tex/, and a
+# file outside the glob is a file nobody checks (CLAUDE.md, "a checker sees
+# only what its glob sees").  main.tex carries no mathematics but scanning it
+# costs nothing and keeps the rule simple.
+for f in sorted(glob.glob('tex/**/*.tex', recursive=True)):
     base = os.path.basename(f)
     for i, raw in enumerate(open(f, errors='ignore')):
         line = raw.split('%')[0]

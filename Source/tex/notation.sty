@@ -1,0 +1,32 @@
+% notation.sty -- notation macros.  These follow the TARGET PAPER, not the
+% textbook's convenience (CLAUDE.md, Phase 4: "notation follows the target
+% paper").  Where the paper departs from standard notation, say so in a
+% footnote in the text rather than silently normalising it here.
+%
+% ASCII ONLY under tex/.
+\ProvidesPackage{notation}
+
+% notation-check.sh reads THIS file to build its list of what to police, and it
+% can only police ZERO-ARGUMENT macros whose expansion is a fixed string of at
+% least six characters.  A macro taking an argument (\Hilb[1] below) is never
+% checked, so a hand-written expansion of it will not be caught -- keep those
+% few and grep by hand when in doubt.
+
+%% ------------------------------------------------------------ ground field
+% \newcommand{\CC}{\mathbb{C}}
+% \newcommand{\PP}{\mathbb{P}}
+
+%% ----------------------------------------------------------------- sheaves
+% \newcommand{\Oc}{\mathcal{O}}
+% \newcommand{\Fc}{\mathcal{F}}
+
+%% ------------------------------------------- objects specific to the paper
+% Name them as the paper names them, and put the paper's own gloss in the
+% trailing comment -- this file doubles as the notation glossary's source.
+% \newcommand{\Hilb}[1]{X^{[#1]}}     % Hilbert scheme of #1 points
+
+%% ------------------------------------------------------- citation pointers
+% A shorthand that expands to \cite[...]{Key} is convenient but must be braced
+% inside the optional argument of a theorem environment, where the first ']'
+% would otherwise end the argument (see preamble.sty).
+% \newcommand{\PAP}[1]{\cite[#1]{Key}}

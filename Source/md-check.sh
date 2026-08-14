@@ -28,11 +28,17 @@ cd "$(dirname "$0")"
 python3 - "$@" <<'PY'
 import re, glob, sys, os
 
-# Shared policy files live at the Study root, outside this project's glob.  A
-# checker sees only what its glob names: list them explicitly or nobody checks
-# them.
+# A checker sees only what its glob names, so both halves of this list matter.
+#
+# Shared policy files live at the Study root, outside the project glob: list
+# them explicitly or nobody checks them.
+#
+# EVERY .md under the project, not only the top level: refs/NOTES.md carries
+# dozens of references to our own numbered items and to source item numbers,
+# and it once sat outside this glob for weeks.  Keep the recursive form when
+# .md files appear in a new directory.
 MD    = ['../CLAUDE.md', '../PHASE1_PROBE_GUIDE.md', '../README.md'] \
-        + sorted(glob.glob('*.md'))
+        + sorted(glob.glob('**/*.md', recursive=True))
 AUX   = sorted(f for f in glob.glob('tex/**/*.aux', recursive=True)
                  if os.path.basename(f) != 'main.aux')
 
@@ -49,6 +55,13 @@ PROJECT -= {'P'}          # \P is redefined but also plain LaTeX; too noisy
 
 KIND = {'비고':'rem', '정리':'thm', '명제':'prop', '보조정리':'lem',
         '정의':'def', '예':'ex', '따름정리':'cor'}
+
+# Abbreviated English forms, as used in refs/NOTES.md when it records which of
+# OUR items a source item ended up in.  Same target prefixes.
+KIND_EN = {'Thm':'thm', 'Theorem':'thm', 'Prop':'prop', 'Proposition':'prop',
+           'Lem':'lem', 'Lemma':'lem', 'Cor':'cor', 'Corollary':'cor',
+           'Def':'def', 'Definition':'def', 'Ex':'ex', 'Example':'ex',
+           'Rmk':'rem', 'Remark':'rem'}
 
 def strip_code(t):
     t = re.sub(r'```.*?```', '', t, flags=re.S)
@@ -107,7 +120,7 @@ for f in MD:
         else:
             i += 1
 
-    # 3. cross-references against the .aux files
+    # 3a. cross-references against the .aux files, Korean form: `ch07` 비고 7.34
     for m in re.finditer(r'`ch(\d\d)`\s*(비고|정리|명제|보조정리|정의|예|따름정리)'
                          r'\s*([0-9]+\.[0-9]+)', txt):
         labs = num2lab.get(m.group(3), [])
@@ -115,6 +128,38 @@ for f in MD:
             ln = txt[:m.start()].count('\n') + 1
             bad('xref', f'{show}:{ln}',
                 f'{m.group(0)} -> {", ".join(labs) or "no such number"}')
+
+    # 3b. OUR items in the abbreviated English form, "Ch06 Ex 6.6" or
+    # "P3 Rmk 10.15".
+    # The chapter prefix is required and is not decoration: the target paper's
+    # own items are written the same way otherwise ("Thm 1.2"), and the numbers
+    # collide.  Bare "Thm 1.2" is therefore reserved for the target paper and is
+    # checked by nothing here; anything referring to OUR book must carry its
+    # chapter.
+    #   ChNN ...  a Part I chapter: number, kind AND chapter are verified.
+    #   PN / PNa  a Part II chapter: number and kind are verified.  Part II
+    #             chapters are numbered after Part I, so the chapter digit is
+    #             not recoverable from the label -- do not try.
+    # The prefix is often written in backticks in running prose (`P4b` Rmk
+    # 12.14).  strip_code() would delete it and the reference would then look
+    # like the target paper's own "Rmk 12.14" and be checked by nothing -- a
+    # whole class of references escaped this check that way.  Unwrap the prefix
+    # BEFORE stripping code spans.
+    body = strip_code(re.sub(r'`(Ch\d\d|P\d[ab]?)`', r'\1', txt))
+    for m in re.finditer(r'(?:`?Ch(\d\d)`?|`?P\d[ab]?`?)\s+(' + '|'.join(KIND_EN) +
+                         r')\.?~?\s*([0-9]+)\.([0-9]+)(?![0-9])(?!\.[0-9])',
+                         body):
+        ch, kind, maj, minr = m.group(1), m.group(2), m.group(3), m.group(4)
+        num  = f'{maj}.{minr}'
+        labs = num2lab.get(num, [])
+        ln   = body[:m.start()].count('\n') + 1
+        if ch is not None and int(maj) != int(ch):
+            bad('xref', f'{show}:~{ln}', f'{m.group(0)} -> chapter is {ch}')
+        elif not labs:
+            bad('xref', f'{show}:~{ln}', f'{m.group(0)} -> no such number')
+        elif not any(l.startswith(KIND_EN[kind] + ':') for l in labs):
+            bad('xref', f'{show}:~{ln}',
+                f'{m.group(0)} -> {", ".join(labs)}')
 
 LABEL = {'macro': 'project macro outside backticks',
          'pipe' : 'pipe inside math inside a table row',
@@ -139,17 +184,31 @@ LABEL = {'macro': 'project macro outside backticks',
 # Both tables are part of the template, so this applies to every project.  The
 # empty placeholder rows of a fresh project match neither pattern and are
 # silently ignored.
+#
+# TWO SPELLINGS, both in use and both must be understood, or the check reports
+# a whole project's chapters as drifted and gets ignored as noise:
+#   - the approval cell is a tick (U+2611 / U+2610) in some projects and the
+#     word 승인 in others;
+#   - the log names the chapter **Ch01** or **`Ch01`**.
 import re as _re
+def _approved(cell):
+    return ('대기' not in cell) and ('승인' in cell or '☑' in cell)
 _prog = 'progress.md'
 if os.path.exists(_prog):
     _txt = open(_prog, encoding='utf-8').read()
     _ticked, _logged = set(), set()
     for _l in _txt.split('\n'):
-        _m = _re.match(r'\|\s*(\d{2})\s*\|\s*[A-Z].*\|\s*(.+?)\s*\|\s*$', _l)
-        if _m and ('신규' in _l or 'import:' in _l):
-            if '승인' in _m.group(2):
-                _ticked.add(_m.group(1))
-        _m2 = _re.search(r'\*\*Ch(\d{2})\*\*', _l)
+        # Read the row by CELLS, never by one regex over the whole line: a
+        # chapter title beginning with a lowercase letter ("klt, plt, and lc")
+        # once fell out of such a regex, and the row was then silently absent
+        # from both sides of the comparison.
+        _c = [x.strip() for x in _l.strip().strip('|').split('|')] \
+             if _l.lstrip().startswith('|') else []
+        if len(_c) >= 4 and _re.fullmatch(r'\d{2}', _c[0]) \
+                and ('신규' in _l or 'import:' in _l):
+            if _approved(_c[-1]):
+                _ticked.add(_c[0])
+        _m2 = _re.search(r'\*\*`?Ch(\d{2})`?\*\*', _l)
         if _m2 and '| 승인 |' in _l:
             _logged.add(_m2.group(1))
     for _ch in sorted(_ticked - _logged):
@@ -158,6 +217,43 @@ if os.path.exists(_prog):
     for _ch in sorted(_logged - _ticked):
         issues.append(('approval', f'{_prog}',
                        f'Ch{_ch} is in the approval log but not ticked in the chapter table'))
+
+    # Phase 5 duplicates the same fact in the same two places: the "paper
+    # reading status" table and the approval log.  The rule above sees only
+    # ChNN rows, so until this was added the Part II half of the book was
+    # unchecked -- the exact shape of the Part I drift, one Part later.
+    #
+    # Rule: a Part II chapter marked approved in the reading-status table  <=>
+    # the approval log has a row naming it and marked as approved.
+    # "승인 대기" (awaiting approval) contains the word 승인 and must not count,
+    # hence the explicit 대기 exclusion on both sides.
+    #
+    # The two tables name the same chapter differently, and both spellings are
+    # in use across projects: the reading table always holds the file name
+    # (paper/sec04a-...), while the approval log names it either **sec04a** or
+    # **P4a**.  Normalise to the file-name form before comparing, or the check
+    # reports every Part II chapter of a P-naming project as missing.
+    _sticked, _slogged = set(), set()
+    for _l in _txt.split('\n'):
+        _c = [x.strip() for x in _l.strip().strip('|').split('|')] \
+             if _l.lstrip().startswith('|') else []
+        _m3 = _re.match(r'`?paper/sec(\d{2}[ab]?)', _c[1]) if len(_c) >= 4 else None
+        if _m3 and _approved(_c[3]):
+            _sticked.add(_m3.group(1))
+        _m4 = _re.search(r'\*\*`?sec(\d{2}[ab]?)`?\*\*', _l)
+        if _m4 and '| 승인 |' in _l:
+            _slogged.add(_m4.group(1))
+        _m5 = _re.search(r'\*\*`?P(\d{1,2})([ab]?)`?\*\*', _l)
+        if _m5 and '| 승인 |' in _l:
+            _slogged.add(f'{int(_m5.group(1)):02d}{_m5.group(2)}')
+    for _s in sorted(_sticked - _slogged):
+        issues.append(('approval', f'{_prog}',
+                       f'sec{_s} is approved in the reading table but has no '
+                       f'approval-log row'))
+    for _s in sorted(_slogged - _sticked):
+        issues.append(('approval', f'{_prog}',
+                       f'sec{_s} is in the approval log but not approved in '
+                       f'the reading table'))
 
 print('== md files checked ==')
 for f in MD:
