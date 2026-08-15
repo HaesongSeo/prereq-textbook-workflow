@@ -1,0 +1,100 @@
+% paper/sec00-example.tex -- FORMAT EXAMPLE, not a section of any book.
+%
+% Part II reads the paper section by section (CLAUDE.md, Phase 5).  Copy this
+% file to paper/secNN-SLUG.tex.  Each file is a \chapter: Part II chapters
+% are numbered after Part I, which is why the running head is set by hand.
+% main.tex deliberately does NOT \include it.
+%
+% ASCII only under tex/.
+\chapter{<Title: what this section of the paper achieves>}
+\chaptermark{<Short running head>}
+\label{ch:read-SLUG}
+
+% Same four-item header as a Part I chapter, read differently: here "Assumed"
+% points at the preparatory chapters, and "How far things are proved" says
+% which of the paper's arguments are read as printed and which had to be
+% repaired.
+\begin{chapterheader}
+\textbf{Purpose.}
+To read \S<n> of the paper. <What comes out of the section and nothing else
+does -- name the two or three objects or inequalities that survive it.>
+
+\medskip
+\textbf{Assumed.}
+Chapter~\ref{ch:SLUG} for <what>; <further preparatory chapters, each with
+what it supplies>. <Anything assumed that Part I did not cover, named here.>
+
+\medskip
+\textbf{Supports.}
+\S<n> of the paper, pp.~<a>--<b>. <Where its output is consumed: which later
+section, and for what.>
+
+\medskip
+\textbf{How far things are proved.}
+<The default is that the paper's proofs are read rather than reproduced.  Name
+the exceptions: the places where the printed argument does not close, what was
+done about each, and that the repair is marked in the text.  If a statement of
+the paper is wrong rather than compressed, say so here and record it in the
+list of misprints.>
+\end{chapterheader}
+
+%% =====================================================================
+\section{<What the section replaces, or the problem it opens with>}
+\label{sec:read-SLUG-opening}
+
+<Set the scene: what the paper has in hand at the start of this section, and
+what it cannot yet do.  A section of Part II opens by saying why the section
+exists, not by summarising it.>
+
+%% =====================================================================
+\section{<The argument, in the paper's order>}
+\label{sec:read-SLUG-argument}
+
+<Follow the paper.  Quote its numbering as text -- Lemma <n.m>, equation
+(<n.m>) -- so that the reader can put the two documents side by side.  Those
+numbers pass through no cross-reference and nothing checks them
+automatically, which is why
+the project keeps a source-number checker (tex/<paper>-check.sh).>
+
+\begin{lem}[{\cite[Lem.~<n.m>]{Har77}}]
+\label{lem:read-SLUG}
+<Restate a statement of the paper only when the reading needs it in front of
+the reader.  Otherwise cite it.>
+\end{lem}
+
+<Where the paper compresses a step, restore it and mark the restoration:>
+\OWNPROOF{the paper obtains this in one phrase; the two lines below are ours}
+
+<Where our own routine verification is added for the reader's convenience,
+mark it more quietly:>
+\OWNCHECK{a direct computation, no gap in the source}
+
+<Where something remains genuinely unclear, say so rather than hedging:>
+\uncertain{<what exactly is unclear, and what would settle it>}
+
+\begin{rem}[what \S<n> hands to \S<n+1>]
+\label{rem:read-SLUG-handover}
+<The last remark of a Part II chapter states the situation at the end of the
+section: the objects now available, the inequalities now known, and -- this is
+the useful half -- what is NOT used again.>
+\end{rem}
+
+%% =====================================================================
+\section{Summary: where this section is used}
+\label{sec:read-SLUG-summary}
+
+\begin{center}
+\small
+\begin{tabular}{@{}L{4.6cm}lL{5.9cm}@{}}
+\toprule
+Item & Here & Used in <PAPER> \\
+\midrule
+<the object the section constructs>
+  & \ref{lem:read-SLUG}
+  & <\S of the paper that consumes it, and for what> \\
+<the restored argument>
+  & \ref{rem:read-SLUG-handover}
+  & <where the restoration matters later, if it does> \\
+\bottomrule
+\end{tabular}
+\end{center}

@@ -77,6 +77,14 @@
 승인될 때마다 `main.tex`의 `\include` 줄을 하나씩 살린다. **첫 `\cite`가
 생기면 `main.tex`의 `\nocite{*}`를 지운다.**
 
+장과 절의 형식은 `tex/chapters/ch00-example.tex`와 `tex/paper/sec00-example.tex`를
+복사해 시작한다 — 머리 상자(Purpose / Assumed / Supports / How far things are
+proved)와 맨 끝의 「Summary: where this chapter is used」 표(Item / Here /
+Used in)가 형식의 전부다. **그 표가 챕터 확정 검사의 도구다**: 위에서 번호가
+붙은 항목은 전부 표에 나타나야 하고, 각 행은 그것이 쓰이는 자리를 가리켜야
+한다. 가리킬 곳이 없는 항목은 지우거나, 본문에서 필요한 직관이라고 밝힌다.
+두 예시 파일은 `main.tex`에 포함되어 있지 않다.
+
 빌드 부산물(`.aux`, `.log`, `.toc`, `.bbl` 등)은 **지우지 않는다.**
 `md-check.sh`가 `.aux`를 읽고, 분량 실측이 `main.toc`와 `main.log`를 읽는다.
 저장소에 올라가지 않도록 `.gitignore`에만 넣어 둔다.

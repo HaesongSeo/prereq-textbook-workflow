@@ -1,0 +1,129 @@
+% chapters/ch00-example.tex -- FORMAT EXAMPLE, not a chapter of any book.
+%
+% Copy this file to chapters/chNN-<slug>.tex, replace everything in angle
+% brackets, and put your own slug in place of SLUG in every label.  main.tex
+% deliberately does NOT \include it: an unedited example must never reach the
+% PDF.
+%
+% ASCII only under tex/.
+\chapter{<Title: name the object, not the technique>}
+\label{ch:SLUG}
+
+% ---------------------------------------------------------------- header box
+% Required of every chapter (CLAUDE.md, Phase 4).  Four items, in this order.
+% Write all four in PLAIN WORDS: no depth grades (L0-L4), no node IDs, no
+% baseline numbers, no Phase numbers, and no pointer to spec.md /
+% background.md / progress.md.  Those are our working devices, not the
+% reader's.  Where a grade used to justify an omission ("we stop here, it is
+% L2"), write the reason instead ("the paper only quotes the statement, so we
+% stop here").
+\begin{chapterheader}
+\textbf{Purpose.}
+<What this chapter is for, in terms of the paper.  Name the objects it builds
+and the one thing they are needed for.  Three to six sentences.  Not a table
+of contents of the chapter.>
+
+\medskip
+\textbf{Assumed.}
+<What the reader is taken to know already, listed concretely.  Written from
+the knowledge diagnosis but never citing it -- and it is also the promise that
+nothing K2-or-above gets re-explained below.  Say explicitly what is NOT used
+here if that spares the reader a detour.>
+
+\medskip
+\textbf{Supports.}
+<Which part of the paper this serves: section numbers, and what those sections
+do with it.  If a later chapter depends on this one, say so with a
+cross-reference.>
+
+\medskip
+\textbf{How far things are proved.}
+<The honest scope.  "Everything, with complete proofs", or "statements and
+their role only", or a mixture -- and the reason for the line where it falls.
+If the paper imitates a proof rather than quoting a result, that is the reason
+to prove it here, and it belongs in this paragraph.>
+\end{chapterheader}
+
+% A short orientation paragraph before the first section: conventions that hold
+% throughout the chapter, and nothing else.
+Throughout, <standing conventions: the letters, the standing hypotheses, the
+one notational choice that differs from the reader's habit>.
+
+%% =====================================================================
+\section{<First section: the definition and what it is for>}
+\label{sec:SLUG-first}
+
+% Every numbered item carries an exact pointer.  Author and year is not enough
+% (CLAUDE.md, verification rules).
+%
+% TRAP: inside the OPTIONAL argument of a theorem environment, \cite[...]{...}
+% ends at the first ']'.  Brace the whole pointer, as below.
+\begin{defn}[{\cite[Def.~<n.m>]{Har77}}]
+\label{def:SLUG}
+<The definition, in the paper's notation.  If the paper's notation departs
+from the standard one, follow the paper and say so in a footnote.>
+\end{defn}
+
+<One or two sentences on why the definition is shaped this way -- the reader
+should learn what the definition is guarding against.>
+
+\begin{prop}[{\cite[Thm.~<n.m>]{Har77}}]
+\label{prop:SLUG}
+<The statement exactly as the paper uses it, not in the greatest generality
+the source offers.>
+\end{prop}
+
+\begin{proof}
+<Include a proof only when the chapter's stated scope calls for one.  If the
+source proves it, say which source and reproduce the argument; if the source
+leaves a gap that we fill, mark it.>
+\OWNPROOF{the source states the result without proof; the argument below is
+ours}
+\end{proof}
+
+\begin{ex}
+\label{ex:SLUG}
+<An example or a computation that the reader can check.  One per statement at
+most, and only where the chapter's scope allows examples.>
+\end{ex}
+
+\begin{rem}
+\label{rem:SLUG}
+<A remark earns its place by explaining a choice, a failure of the obvious
+generalisation, or the exact point where the paper will use this.  A remark
+that only restates the definition is deleted.>
+\end{rem}
+
+%% =====================================================================
+% The chapter closes with this table.  It is what makes the chapter auditable:
+% every numbered item above must appear in it, and every row must name a place
+% in the paper (or a later chapter) that uses the item.  An item with no
+% "Used in" entry is either deleted or justified in the text as intuition the
+% reader needs (CLAUDE.md, Phase 4, the check before a chapter is finalised).
+\section{Summary: where this chapter is used}
+\label{sec:SLUG-summary}
+
+\begin{center}
+\small
+\begin{tabular}{@{}L{4.6cm}lL{5.9cm}@{}}
+\toprule
+Item & Here & Used in <PAPER> \\
+\midrule
+<the object or statement, named as the reader would look for it>
+  & \ref{def:SLUG}
+  & <\S of the paper; and in one clause, what it is used for there> \\
+<the statement the paper actually applies>
+  & \ref{prop:SLUG}
+  & <\S of the paper; or a later chapter, by cross-reference> \\
+<the worked example>
+  & \ref{ex:SLUG}
+  & <what it is the local model of, or which hypothesis it shows to be
+    necessary> \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+<A closing paragraph of two or three sentences: what the chapter decided, and
+what the reader should carry into the next one.  Optional, but it is the place
+to say which single item of the table is the load-bearing one.>
