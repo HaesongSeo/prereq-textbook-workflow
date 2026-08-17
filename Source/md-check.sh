@@ -19,6 +19,10 @@
 #      to be spelled out in the CHAT and requires them to stay coded in THESE
 #      files; the second half needs a checker because the first half invites
 #      the mistake.  See the GRADE_COLS block below.
+#   5. A table copied into a second file and then edited in only one of them,
+#      and the state block at the top of progress.md disagreeing with the
+#      approval log.  Both are the same defect as (3) one level up: a fact
+#      written twice drifts, and only a checker notices.
 #
 # Also flags inline math that is not closed on its own line -- which silently
 # exposes every command in it -- and \uXXXX escapes leaked by tooling.
@@ -173,7 +177,93 @@ LABEL = {'macro': 'project macro outside backticks',
          'xref' : 'cross-reference does not match the .aux files          ',
          'escape': 'leaked \\uXXXX escape',
          'approval': 'chapter table vs approval log',
-         'grade': 'grade column spelled out instead of coded'}
+         'grade': 'grade column spelled out instead of coded',
+         'state': 'state block vs approval log',
+         'ssot' : 'SSOT-COPY table vs its canonical'}
+
+
+# --------------------------------------------------------------- SSOT tables
+# The same table legitimately appears in more than one file -- README.md has to
+# introduce the method, background.md has to sit open while grading.  What is
+# not legitimate is one copy being edited and nobody noticing.
+#
+# A canonical table is marked   <!-- SSOT-CANON: name -->
+# a copy is marked              <!-- SSOT-COPY: name -->
+# and the marker sits on its own line just above the table.
+#
+# Rule: a copy may COVER the canonical but may not CHANGE it.  Same number of
+# rows and columns, and every canonical cell must appear inside the copy's cell
+# in the same position.  So README's "| **A** 배경 언급만 |" passes against
+# "| **A** |", and changing an L1 to an L2 does not.
+def _table_at(lines, start):
+    """Read the markdown table that begins within 4 lines after `start`."""
+    for k in range(start, min(start + 5, len(lines))):
+        if (re.match(r'^\s*\|.*\|\s*$', lines[k]) and k + 1 < len(lines)
+                and re.match(r'^\s*\|[\s:|-]+\|\s*$', lines[k + 1])):
+            rows, j = [], k
+            while j < len(lines) and re.match(r'^\s*\|', lines[j]):
+                if not re.match(r'^\s*\|[\s:|-]+\|\s*$', lines[j]):
+                    rows.append([c.strip().strip('*` ').strip()
+                                 for c in lines[j].strip().strip('|').split('|')])
+                j += 1
+            return rows, k + 1
+    return None, start + 1
+
+canon, copies = {}, []
+for f in MD:
+    if not os.path.exists(f): continue
+    lines = open(f, encoding='utf-8').read().split('\n')
+    show  = f.replace('../', '')
+    for i, l in enumerate(lines):
+        m = re.match(r'^\s*<!--\s*SSOT-(CANON|COPY):\s*([\w-]+)\s*-->\s*$', l)
+        if not m: continue
+        rows, ln = _table_at(lines, i + 1)
+        if rows is None:
+            bad('ssot', f'{show}:{i+1}', f'{m.group(2)}: marker with no table')
+        elif m.group(1) == 'CANON':
+            canon[m.group(2)] = (show, ln, rows)
+        else:
+            copies.append((m.group(2), show, ln, rows))
+
+for name, show, ln, rows in copies:
+    if name not in canon:
+        bad('ssot', f'{show}:{ln}', f'{name}: no canonical table declared')
+        continue
+    cshow, _, crows = canon[name]
+    if len(rows) != len(crows):
+        bad('ssot', f'{show}:{ln}',
+            f'{name}: {len(rows)} rows, canonical ({cshow}) has {len(crows)}')
+        continue
+    for r, (cr, rr) in enumerate(zip(crows, rows)):
+        if len(cr) != len(rr):
+            bad('ssot', f'{show}:{ln+r}',
+                f'{name}: row {r+1} has {len(rr)} cells, canonical has {len(cr)}')
+            continue
+        for c, (cc, rc) in enumerate(zip(cr, rr)):
+            if cc and cc not in rc:
+                bad('ssot', f'{show}:{ln+r}',
+                    f'{name}: row {r+1} col {c+1} lost "{cc}" (found "{rc[:24]}")')
+
+
+# ---------------------------------------------------------- progress.md state
+# The state block is the canonical value of phase / last_approved / which
+# chapters are approved (CLAUDE.md §2).  It exists so that resuming a session
+# is a read, not an interpretation -- but a second place to write a fact is a
+# second place for it to go stale, which is exactly what happened to the
+# chapter table and the approval log.  So it is checked against the same source
+# the approval check above derives from, not trusted on its own.
+FM_PHASE  = ('in_progress', 'awaiting_approval', 'done')
+
+def _front_matter(path):
+    lines = open(path, encoding='utf-8').read().split('\n')
+    if not lines or lines[0].strip() != '---': return None
+    try: end = lines.index('---', 1)
+    except ValueError: return None
+    fm = {}
+    for l in lines[1:end]:
+        m = re.match(r'^([a-z_]+):\s*(.*)$', l)
+        if m: fm[m.group(1)] = m.group(2).strip()
+    return fm
 
 
 # ------------------------------------------------------------- grade columns
@@ -338,15 +428,57 @@ if os.path.exists(_prog):
                        f'sec{_s} is in the approval log but not approved in '
                        f'the reading table'))
 
+    # ---- state block, checked against the log the rule above already trusts
+    _fm = _front_matter(_prog)
+    if _fm is None:
+        bad('state', _prog, 'no YAML state block at the top of the file')
+    else:
+        for _k in ('phase', 'phase_status', 'last_approved', 'next_action',
+                   'chapters_approved', 'sections_approved'):
+            if _k not in _fm:
+                bad('state', _prog, f'state block is missing "{_k}"')
+        _ph = _fm.get('phase', '')
+        if not _re.fullmatch(r'[0-6]', _ph):
+            bad('state', _prog, f'phase must be 0-6, found "{_ph}"')
+        _st = _fm.get('phase_status', '')
+        if _st and _st not in FM_PHASE:
+            bad('state', _prog,
+                f'phase_status must be one of {"/".join(FM_PHASE)}, found "{_st}"')
+        # The prose bullet restates the phase for a human; it must at least
+        # mention the canonical number, or the two are telling different stories.
+        for _l in _txt.split('\n'):
+            if _l.startswith('- 현재 Phase:') and _ph and _ph not in _l:
+                bad('state', _prog,
+                    f'state block says phase {_ph}, "현재 Phase" line does not '
+                    f'mention it')
+        _fmch = set(_re.findall(r'\d{2}', _fm.get('chapters_approved', '')))
+        _fmsec = set(_re.findall(r'\d{2}[ab]?', _fm.get('sections_approved', '')))
+        for _ch in sorted(_fmch - _logged):
+            bad('state', _prog,
+                f'Ch{_ch} is in chapters_approved but not in the approval log')
+        for _ch in sorted(_logged - _fmch):
+            bad('state', _prog,
+                f'Ch{_ch} is approved in the log but missing from chapters_approved')
+        for _s in sorted(_fmsec - _slogged):
+            bad('state', _prog,
+                f'sec{_s} is in sections_approved but not in the approval log')
+        for _s in sorted(_slogged - _fmsec):
+            bad('state', _prog,
+                f'sec{_s} is approved in the log but missing from sections_approved')
+
 print('== md files checked ==')
 for f in MD:
     if os.path.exists(f): print('  ' + f.replace('../', ''))
 print(f'== .aux files read: {len(AUX)}; numbered items: {len(num2lab)} ==')
+# A checker that reports "0" without saying what it looked at is how the
+# preface and the appendices went unchecked for a whole phase.  Say the counts.
+print(f'== SSOT tables: {len(canon)} canonical, {len(copies)} copies '
+      f'({", ".join(sorted(canon)) or "none"}) ==')
 if not AUX:
     print('  WARNING: no .aux found -- run tex/check.sh first, xrefs unchecked')
 
 for kind in ('macro', 'pipe', 'table', 'math', 'xref', 'escape', 'approval',
-             'grade'):
+             'grade', 'state', 'ssot'):
     hits = [x for x in issues if x[0] == kind]
     print(f'  {LABEL[kind]:<46} {len(hits)}')
     for _, where, what in hits:
