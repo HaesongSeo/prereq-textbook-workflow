@@ -5,6 +5,11 @@
 `ADAPTED:` 목록이 이 블록의 핵심이다. 원본이 고쳐져 다시 가져올 때, 그 목록이
 그대로 조리법이 된다. 「손봤다」가 아니라 **무엇을 무엇으로** 바꿨는지 적는다.
 
+`FIXED:`는 다른 것이다 — 가져온 뒤 **수학 오류를 발견해 이쪽만 고친 것**의
+목록이다 (CLAUDE.md 「정본의 방향」). 적응은 두 책이 다른 것이 정상이지만
+이쪽은 원본이 아직 틀린 채로 있다는 뜻이므로, 둘을 섞어 적지 않는다.
+고친 것이 없으면 `FIXED:` 줄을 지운다.
+
 --------------------------------- 여기부터 ---------------------------------
 
 % ===========================================================================
@@ -23,8 +28,13 @@
 %   - \<원본 매크로>    ->  \<이 책의 매크로>
 %   - chapter header rewritten: what this supports is different here
 %
-% AUTHORITY: the origin is authoritative for the mathematics. If you find an
-% error here, fix it THERE first and re-import; otherwise the two write-ups
-% diverge and neither is trustworthy. Only the ADAPTED list above is meant to
-% differ. Run `sh tex/import-check.sh` to see whether the origin has moved.
+% FIXED: (drop this section if empty -- see CLAUDE.md, "the direction of
+% authority". These are mathematical corrections made HERE; the origin still
+% carries the error.)
+%   - <what was wrong>  ->  <what it now says>
+%
+% AUTHORITY: the origin is authoritative for the mathematics, but an error
+% found here is corrected here and listed under FIXED above -- not pushed back
+% to the origin. ADAPTED and FIXED are the only things meant to differ from
+% the origin. Run `sh tex/import-check.sh` to see whether the origin has moved.
 % ===========================================================================

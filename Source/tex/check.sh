@@ -46,7 +46,9 @@ echo "== 4. chapter summary tables =="
 python3 - <<'PY' || true
 import re, glob, os
 KIND = r'(?:thm|prop|lem|cor|def|defn|ex|rem|rmk|conv)'
-files = [f for f in sorted(glob.glob('chapters/*.tex'))
+# Recursive, per CLAUDE.md: a checker sees only what its glob names, so a
+# chapter filed into a subdirectory must not fall outside it.
+files = [f for f in sorted(glob.glob('chapters/**/*.tex', recursive=True))
          if not os.path.basename(f).startswith('ch00-')]   # ch00 is the template
 missing_total = notable = 0
 for f in files:

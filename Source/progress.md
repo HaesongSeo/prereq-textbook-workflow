@@ -12,19 +12,17 @@ sections_approved: []
 > 세션 시작 시 가장 먼저 읽는 파일. **맨 위 상태 블록이 `phase`·`last_approved`·
 > 승인된 장 목록의 정본이다** (`CLAUDE.md` §2 「상태 블록」). 아래 「현재 상태」의
 > 산문은 블록이 담지 못하는 것을 담는다 — 같은 사실을 두 번 적지 않는다.
-> 승인을 받으면 **같은 턴에** 블록·승인 로그·챕터 진행 현황 셋을 함께 갱신한다.
 
 ## 새 세션 시작 방법
 
 1. 작업 디렉터리를 **`Study/<프로젝트 이름>/`** 로 잡는다.
    (`Study/` 루트의 `CLAUDE.md`는 정책 파일이며 모든 프로젝트가 공유한다.
    따라서 어느 프로젝트인지 먼저 지정해야 한다.)
-2. `CLAUDE.md` §2의 세션 프로토콜대로 `progress.md` → `spec.md` → `background.md`
-   순서로 읽는다. `progress.md`는 **맨 위 상태 블록을 먼저** 본다. 이 3개를 읽기 전에 어떤 수학도 쓰지 않는다.
+2. `CLAUDE.md` §2의 세션 프로토콜대로 `progress.md` → `spec.md` → `background.md` 순서로 읽는다.
    **매 턴 끝에 세 파일을 모두 확인한다.** 바뀔 것이 없으면 없다고 확인만 한다.
    (`background.md`는 Phase 1 산출물이라 대개 바뀔 것이 없지만, 「없음」을
    확인하는 것까지가 절차다.)
-   **Phase 1을 진행 중이면 `Study/` 루트의 `PHASE1_PROBE_GUIDE.md`도 읽는다.**
+   Phase 1을 진행 중이면 `Study/` 루트의 `PHASE1_PROBE_GUIDE.md`도 읽는다.
    probe 선정과 K등급 판정은 그 파일이 정본이다.
 3. 검사를 **이 순서로** 돌린다 (아래 「검사 스크립트」 참조).
    `sh tex/check.sh` → `sh md-check.sh` → `sh tex/notation-check.sh` →
@@ -40,12 +38,9 @@ sections_approved: []
 **세션 간에 남지 않는 것:** 임시 스크래치패드에 추출해 둔 PDF 텍스트.
 필요하면 `pdftotext -layout`으로 다시 만든다. `refs/` 원본은 그대로 남는다.
 
-**스캔본 주의.** 원문 PDF의 텍스트 레이어가 손상된 경우
-(numdam·E-Periodica 등의 스캔본), 진술을 옮겨 적기 전에
-`pdftoppm -r 150 -f N -l N -png`로 해당 쪽을 이미지로 렌더링해 직접 읽는다.
-**텍스트 레이어가 멀쩡해 보여도** $\liminf$의 밑줄 같은 것은 소실되므로,
-진술의 성패가 걸린 기호는 이미지로 확인한다. 각 자료의 읽는 법과 페이지 대응은
-`refs/NOTES.md`에 적는다.
+**스캔본 주의.** 텍스트 레이어를 믿을 수 없으면 진술을 옮겨 적기 전에 해당
+쪽을 이미지로 렌더링해 직접 읽는다. 읽는 법과 페이지 대응은 `refs/NOTES.md`
+「이 PDF를 읽는 법」이 정본이다.
 
 ## 현재 상태
 
@@ -84,8 +79,7 @@ sections_approved: []
 **프로젝트별로 하나 더 만든다: 원문 정리 번호 대조기.** 본문이 텍스트로 적은
 원문 항목 번호(`Thm.~8.1` 등)는 `\ref`를 거치지 않으므로 **아무것도 검사하지
 않는다.** 원문 PDF에서 (종류, 번호) 표를 뽑아 본문과 대조하는 스크립트를
-만들어 둔다 (`tex/<원문>-check.sh`). 어느 프로젝트에서는 Phase 5 중 손으로 3건을
-찾았고, 이 스크립트를 처음 돌리자 4번째가 나왔다.
+만들어 둔다 (`tex/<원문>-check.sh`).
 
 ## 빌드 검증 규칙
 
@@ -96,10 +90,9 @@ sections_approved: []
 승인될 때마다 `main.tex`의 `\include` 줄을 하나씩 살린다. **첫 `\cite`가
 생기면 `main.tex`의 `\nocite{*}`를 지운다.**
 
-장과 절의 형식은 `tex/chapters/ch00-example.tex`와 `tex/paper/sec00-example.tex`를
-복사해 시작한다 — 머리 상자(Purpose / Assumed / Supports / How far things are
-proved)와 맨 끝의 「Summary: where this chapter is used」 표(Item / Here /
-Used in)가 형식의 전부다. **그 표가 챕터 확정 검사의 도구다**: 위에서 번호가
+장과 절의 형식은 `tex/chapters/ch00-example.tex`와 `tex/paper/sec00-example.tex`를 복사해 시작한다 — 머리 상자(Purpose / Assumed / Supports /
+How far things are proved)와 맨 끝의 「Summary: where this chapter is used」
+표(Item / Here / Used in)가 형식의 전부다. **그 표가 챕터 확정 검사의 도구다**: 위에서 번호가
 붙은 항목은 전부 표에 나타나야 하고, 각 행은 그것이 쓰이는 자리를 가리켜야
 한다. 가리킬 곳이 없는 항목은 지우거나, 본문에서 필요한 직관이라고 밝힌다.
 두 예시 파일은 `main.tex`에 포함되어 있지 않다.
@@ -120,8 +113,8 @@ Used in)가 형식의 전부다. **그 표가 챕터 확정 검사의 도구다*
 |---|---|---|---|---|---|---|
 | 01 | | 신규 | ☐ | ☐ | ☐ | ☐ |
 
-> **승인을 받으면 이 표의 「승인」 열과 위의 「승인 로그」를 *같은 턴에 함께*
-> 채운다.** `md-check.sh`에 항목 ⑦로 대조를 넣었다.
+> **승인을 받으면 이 표의 「승인」 열, 위의 「승인 로그」, 맨 위 상태 블록
+> 셋을 같은 턴에 함께 채운다.** `md-check.sh` ⑦·⑨가 셋을 대조한다 —
 > 규칙을 글로만 적어 두는 것으로는 막히지 않았다는 것이 그 경위다.
 
 > 「출처」는 **신규** 또는 **import: `<프로젝트>/<파일>`**. import한 장은
@@ -141,10 +134,7 @@ Used in)가 형식의 전부다. **그 표가 챕터 확정 검사의 도구다*
 측정법: clean-room 빌드 후 `tex/main.toc`의 `\contentsline{chapter}` 시작 쪽을
 읽고 다음 항목(챕터 또는 `\part`)의 시작 쪽에서 뺀다. 마지막 챕터는 참고문헌
 시작 쪽(`main.log`의 `(./main.bbl [NNN`)을 끝으로 삼는다.
-**`\part` 표지 쪽을 빼먹지 않는다** — 이것으로 두 번 틀린 적이 있다.
-
-분량은 **여기 한 곳에만** 적는다. `background.md`나 `spec.md`에 중복하면
-반드시 어긋난다.
+**`\part` 표지 쪽을 빼먹지 않는다**
 
 | Ch | 쪽 범위 | 분량 | 비고 |
 |---|---|---|---|
