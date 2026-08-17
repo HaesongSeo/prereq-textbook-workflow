@@ -27,8 +27,10 @@ sections_approved: []
    **Phase 1을 진행 중이면 `Study/` 루트의 `PHASE1_PROBE_GUIDE.md`도 읽는다.**
    probe 선정과 K등급 판정은 그 파일이 정본이다.
 3. 검사를 **이 순서로** 돌린다 (아래 「검사 스크립트」 참조).
-   `sh tex/check.sh` → `sh md-check.sh` → (프로젝트별 검사기)
-   `md-check.sh`가 `.aux`를 읽으므로 빌드가 먼저다.
+   `sh tex/check.sh` → `sh md-check.sh` → `sh tex/notation-check.sh` →
+   `sh tex/import-check.sh`(가져온 장이 있을 때) → (프로젝트별 원문 번호 대조기)
+   `md-check.sh`가 `.aux`를 읽으므로 빌드가 먼저다. 뒤의 셋은
+   Phase 4·5·6의 종료 조건이 통과를 요구한다.
 4. 아래 「현재 상태」의 *다음 작업*부터 이어간다.
 
 첫 프롬프트 예시:
@@ -74,7 +76,7 @@ sections_approved: []
 
 | 스크립트 | 대상 | 검사 항목 |
 |---|---|---|
-| `sh tex/check.sh` | `tex/` | 비ASCII, clean-room 빌드, 로그(`grep -a`) |
+| `sh tex/check.sh` | `tex/` | ① 비ASCII ② clean-room 빌드 ③ 로그(`grep -a`) ④ 장 끝 「Summary」 표에 빠진 항목 |
 | `sh md-check.sh` | 루트의 공유 정책 파일 + **프로젝트 아래 모든 `.md`** (`refs/NOTES.md` 포함) | ① 백틱 밖 프로젝트 매크로 ② 표 안 수식의 세로줄 ③ 표 열 개수 ④ 한 줄에서 안 닫힌 인라인 수식 ⑤ 우리 항목 번호를 `tex/**/*.aux`와 대조 (한국어 「`chNN` 비고 N.N」과 영어 약식 「`ChNN` Rmk N.N」 두 형태 모두) ⑥ `\uXXXX` 이스케이프 누출 ⑦ 「챕터 진행 현황」·「논문 정독 현황」의 승인 열 ↔ 승인 로그 ⑧ 등급 열(`사용 방식`·`직접`·`추정`·`확정 K`·`깊이`)이 기호를 잃고 평문으로 풀어 쓰였는가 ⑨ 상태 블록 ↔ 승인 로그 ⑩ `SSOT-COPY` 표 ↔ 정본 |
 | `sh tex/notation-check.sh` | **`tex/` 아래 모든 `.tex`** (머리말·부록 포함) | `notation.sty` 매크로의 전개형을 손으로 쓴 곳 |
 | `sh tex/import-check.sh` | `tex/IMPORTS` | 다른 프로젝트에서 가져온 장의 **원본이 바뀌었는가** |
