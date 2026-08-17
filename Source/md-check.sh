@@ -15,6 +15,11 @@
 #      numbers LaTeX actually assigned, read from every .aux under tex/.
 #      These drift silently whenever a remark is inserted into a chapter.
 #
+#   4. Grade columns turned into prose.  CLAUDE.md requires the K/L/A-D codes
+#      to be spelled out in the CHAT and requires them to stay coded in THESE
+#      files; the second half needs a checker because the first half invites
+#      the mistake.  See the GRADE_COLS block below.
+#
 # Also flags inline math that is not closed on its own line -- which silently
 # exposes every command in it -- and \uXXXX escapes leaked by tooling.
 #
@@ -167,7 +172,85 @@ LABEL = {'macro': 'project macro outside backticks',
          'math' : 'inline math not closed on its line',
          'xref' : 'cross-reference does not match the .aux files          ',
          'escape': 'leaked \\uXXXX escape',
-         'approval': 'chapter table vs approval log'}
+         'approval': 'chapter table vs approval log',
+         'grade': 'grade column spelled out instead of coded'}
+
+
+# ------------------------------------------------------------- grade columns
+# CLAUDE.md forbids the grade codes (K0-K3, L0-L4, A-D) in the CHAT and in the
+# book, and requires them IN THESE FILES.  The second half is the one that
+# needs a checker: having been told to speak plainly to the user, the natural
+# next mistake is to write "정확히 진술하고 적용할 수 있는 수준" into the K
+# column too.  Three things break the moment that happens --
+#
+#   - the depth table (usage x K -> L) is a lookup table and stops resolving;
+#   - the "do not re-explain anything at K2 or above" rule of Phase 4 reads
+#     this column mechanically;
+#   - a sentence in a cell breaks the table itself.
+#
+# Two rules, in a column whose header is one of GRADE_COLS:
+#
+#   a. the cell must still CONTAIN its code -- a K in a K column, an L in a
+#      depth column, a letter in the usage column -- or be one of the few
+#      words that stand in for a code (baseline, 인용, 재사용, ...);
+#   b. the cell must not carry the chat-side gloss of that code.
+#
+# Both halves are needed and neither alone is enough.  (a) alone passes
+# "K2 — 정확히 진술하고 적용할 수 있는 수준", which is the very thing the rule
+# forbids; (b) alone passes a cell where the code was simply replaced.
+#
+# What is NOT flagged, because all of it is real and sanctioned usage: a short
+# qualifier ("K2 이상", "K2 (자기지정)"), a bolded code, a decision-table
+# exception spelled out at length ("표에 따르면 **L3**, 채택값 **L4** (...)"),
+# and the stand-in words above.  The check is aimed at ONE defect -- the code
+# turning into prose -- not at cell style.
+#
+# Only project files are checked.  CLAUDE.md and PHASE1_PROBE_GUIDE.md DEFINE
+# the codes and gloss them in prose tables on purpose.
+GRADE_COLS = {'사용 방식': r'(?<![A-Za-z])[A-D](?![A-Za-z])',
+              '직접'     : r'K[0-3]',
+              '추정'     : r'K[0-3]',
+              '추정 K'   : r'K[0-3]',
+              '확정 K'   : r'K[0-3]',
+              '깊이'     : r'L[0-4]',
+              '확정 깊이': r'L[0-4]',
+              '제안 깊이': r'L[0-4]'}
+GRADE_WORDS = ('baseline', '논문 고유', '인용', '재사용', '해당 없음', '없음',
+               'n/a', '미정', '상속', '추정', 'probe', '자기지정')
+GRADE_GLOSS = re.compile(
+    '들어본 적|처음 보는|진술을 알아|정확히 진술|증명을 재구성|증명까지 재구성|'
+    '진술과 출처만|싣지 않|예와 계산까지|진술만 갖다|가설을 확인해|'
+    '증명 기법 자체를 흉내|배경으로 언급')
+
+for f in MD:
+    if not os.path.exists(f) or f.startswith('../'): continue
+    lines = open(f, encoding='utf-8').read().split('\n')
+    i = 0
+    while i < len(lines):
+        if not (re.match(r'^\s*\|.*\|\s*$', lines[i]) and i + 1 < len(lines)
+                and re.match(r'^\s*\|[\s:|-]+\|\s*$', lines[i + 1])):
+            i += 1
+            continue
+        head = [c.strip().strip('*` ') for c in
+                lines[i].strip().strip('|').split('|')]
+        watch = [(k, GRADE_COLS[h]) for k, h in enumerate(head)
+                 if h in GRADE_COLS]
+        j = i + 2
+        while j < len(lines) and re.match(r'^\s*\|', lines[j]):
+            cells = [c.strip() for c in lines[j].strip().strip('|').split('|')]
+            for k, pat in watch:
+                if k >= len(cells): continue
+                v = cells[k].strip('*` ')
+                if v in ('', '-', '--', '—', '–'): continue
+                if GRADE_GLOSS.search(v):
+                    bad('grade', f'{f}:{j+1}',
+                        f'{head[k]}: gloss beside the code -- {v[:40]}')
+                elif not re.search(pat, v) and not any(w in v.lower()
+                                                       for w in GRADE_WORDS):
+                    bad('grade', f'{f}:{j+1}',
+                        f'{head[k]}: no code in cell -- {v[:40]}')
+            j += 1
+        i = j
 
 
 # ---------------------------------------------------------------- approvals
@@ -262,7 +345,8 @@ print(f'== .aux files read: {len(AUX)}; numbered items: {len(num2lab)} ==')
 if not AUX:
     print('  WARNING: no .aux found -- run tex/check.sh first, xrefs unchecked')
 
-for kind in ('macro', 'pipe', 'table', 'math', 'xref', 'escape', 'approval'):
+for kind in ('macro', 'pipe', 'table', 'math', 'xref', 'escape', 'approval',
+             'grade'):
     hits = [x for x in issues if x[0] == kind]
     print(f'  {LABEL[kind]:<46} {len(hits)}')
     for _, where, what in hits:
