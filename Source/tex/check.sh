@@ -35,7 +35,40 @@ for pat in '^!' 'LaTeX Warning' 'Package .* Warning' 'Missing character' \
   printf '  %-24s %s\n' "$pat" "$n"
 done
 
-echo "== 4. result =="
+echo "== 4. chapter summary tables =="
+# progress.md calls the closing "Summary: where this chapter is used" table the
+# tool of the chapter check: every numbered item above must appear in it, and
+# each row must point at where the item is used.  Nothing enforced that, and a
+# book written to the same template dropped the table from all twelve of its
+# chapters -- replacing it with a prose remark, which reads well and cannot be
+# checked.  An item missing from the table is an item nobody has shown a use
+# for, which is exactly what Phase 4 says to delete or to justify.
+python3 - <<'PY' || true
+import re, glob, os
+KIND = r'(?:thm|prop|lem|cor|def|defn|ex|rem|rmk|conv)'
+files = [f for f in sorted(glob.glob('chapters/*.tex'))
+         if not os.path.basename(f).startswith('ch00-')]   # ch00 is the template
+missing_total = notable = 0
+for f in files:
+    src = open(f, encoding='utf-8', errors='replace').read()
+    m = re.search(r'\\section\{Summary[^}]*\}', src)
+    if not m:
+        print(f'  {f}: no "Summary" section')
+        notable += 1
+        continue
+    body, table = src[:m.start()], src[m.start():]
+    items = re.findall(r'\\label\{(' + KIND + r':[^}]*)\}', body)
+    shown = set(re.findall(r'\\(?:ref|Cref|cref|autoref)\{([^}]*)\}', table))
+    gaps  = [i for i in items if i not in shown]
+    if gaps:
+        print(f'  {f}: {len(gaps)}/{len(items)} not in the table -- '
+              + ', '.join(gaps[:6]) + (' ...' if len(gaps) > 6 else ''))
+        missing_total += len(gaps)
+print(f'  {len(files)} chapter file(s); {notable} without a summary table; '
+      f'{missing_total} item(s) missing from a table')
+PY
+
+echo "== 5. result =="
 if [ -f main.pdf ]; then
   echo "  main.pdf: $(pdfinfo main.pdf | awk '/^Pages/{print $2}') pages"
 else
