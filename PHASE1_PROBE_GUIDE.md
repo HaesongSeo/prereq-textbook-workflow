@@ -1,3 +1,5 @@
+한국어 | [English](PHASE1_PROBE_GUIDE.en.md)
+
 # PHASE1_PROBE_GUIDE.md — probe 선정과 K등급 판정
 
 이 파일은 **정책(policy)** 이다. `CLAUDE.md` Phase 1을 세분한 것이며, 모든

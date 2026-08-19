@@ -1,0 +1,64 @@
+% main.tex -- Preparatory textbook for reading <AUTHORS>,
+%             "<TITLE>"
+%
+% Build:  sh tex/check.sh   (never an ad-hoc latexmk + grep; see CLAUDE.md)
+% ASCII only under tex/.
+\documentclass[11pt,oneside]{book}
+
+\usepackage{preamble}
+\usepackage{notation}
+
+% The title block carries the paper's full reference, so that the book states
+% on its face what it is preparatory FOR.  Fill it from spec.md, "Target
+% paper" -- the same string, not a paraphrase.
+\title{\textbf{<Title of the Paper>}\\[0.4em]
+       \large A preparatory textbook\\[1.2em]
+       \normalsize
+       <Authors>,\\
+       \emph{<full title>},\\
+       <journal / arXiv identifier>, <pages>}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\frontmatter
+\tableofcontents
+
+\mainmatter
+
+% Front matter proper (Phase 6): what the book is, how the two Parts relate,
+% the reading order and why, and the legend for the verification markers.
+% \include{preface}
+
+\part{Preparatory chapters}
+% Chapters are added ONE AT A TIME, each after approval (CLAUDE.md, Phase 4).
+% Uncomment as they are written; the order is the one fixed in spec.md,
+% "Chapter plan".  chapters/ch00-example.tex is the format to copy -- it is a
+% template, so it is not included here.
+% \include{chapters/ch01-<slug>}
+% \include{chapters/ch02-<slug>}
+
+\part{Reading the paper}
+% Phase 5.  The order is NOT necessarily the paper's; see spec.md,
+% "Phase 5 order".  The format to copy is paper/sec00-example.tex.
+% \include{paper/sec01-<slug>}
+
+% \part{Appendices}
+\appendix
+% Reader-facing tables that lived only in the management documents until
+% Phase 6 -- a notation correspondence table across several papers, the list
+% of misprints found in the source, and so on.
+% \include{appendix-notation}
+% \include{appendix-misprints}
+
+\backmatter
+% \nocite{*} keeps bibtex from failing on a book with no \cite yet.  DELETE IT
+% once the first chapter cites anything: it would otherwise print every entry
+% of refs.bib, including ones the book never uses.
+\nocite{*}
+\bibliographystyle{alpha}
+\bibliography{refs}
+
+\end{document}

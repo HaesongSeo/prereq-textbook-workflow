@@ -1,0 +1,100 @@
+% preamble.sty -- packages, theorem environments, verification macros.
+%
+% Engine: pdfLaTeX.  Build with:  sh tex/check.sh   (never an ad-hoc latexmk
+% plus grep; see CLAUDE.md, "verification rules").
+%
+% ASCII only under tex/.  One non-ASCII character turns main.log into a binary
+% file, and a plain grep over it then silently finds nothing -- a failed build
+% was once reported as clean that way.
+\ProvidesPackage{preamble}
+
+% ---------------------------------------------------------------- packages
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+% Ragged-right p-column: avoids underfull hboxes in wide table cells.
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\usepackage[margin=1.1in]{geometry}
+\usepackage[hidelinks]{hyperref}
+
+% Add what the target paper's notation actually needs, and nothing else:
+%   \usepackage{mathrsfs}     % \mathscr
+%   \usepackage{tikz-cd}      % commutative diagrams
+%   \usepackage{colonequals}  % \colonequals, if the paper defines with it
+%   \usepackage{longtable}    % an appendix table longer than a page
+
+% --------------------------------------------------------------- theorems
+% One counter per chapter, shared by every environment, so that
+% "Proposition 4.7" and "Lemma 4.8" cannot collide.
+%
+% LABEL PREFIXES ARE PART OF THE BUILD CONTRACT.  md-check.sh reads the .aux
+% files and matches a cross-reference written in the management documents
+% against a label starting with the corresponding prefix.  Use exactly these:
+%
+%   thm:   theorem        prop:  proposition     lem:   lemma
+%   cor:   corollary      def:   definition      ex:    example
+%   rem:   remark
+%
+% TRAP, met twice already: anything expanding to \cite[...]{...} inside the
+% OPTIONAL argument of a theorem environment ends that argument at the first
+% ']'.  That includes any \cite shorthand declared in notation.sty.  Always
+% brace the whole pointer:
+%   \begin{prop}[{\cite[\S2.1]{Key}}]   not   \begin{prop}[\cite[\S2.1]{Key}]
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[chapter]
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{ex}[thm]{Example}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+
+% ------------------------------------------------------- chapter header box
+% CLAUDE.md, Phase 4: every chapter opens with purpose / what is assumed /
+% which part of the paper it supports / how far things are proved.  The last
+% item is written in plain words, never as a grade symbol -- the depth grades
+% are our working device, not the reader's.
+\newsavebox{\chdrbox}
+\newenvironment{chapterheader}
+  {\par\medskip\noindent\setlength{\fboxsep}{9pt}%
+   \begin{lrbox}{\chdrbox}%
+   \begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule}\small}
+  {\end{minipage}\end{lrbox}\fbox{\usebox{\chdrbox}}\par\medskip}
+
+% ---------------------------------------------------- verification markers
+% CLAUDE.md, "verification rules".  Loud in the draft; whether they stay in
+% the final version is decided in Phase 6, and if they stay the book carries a
+% legend for them.
+%
+% \UNVERIFIED{why}  -- a statement whose source we could not pin down.
+% \uncertain{what}  -- a claim we are not sure of, flagged rather than hedged.
+% \OWNPROOF{what}   -- WE filled a gap in the source: the source stated the
+%                      result only, or compressed the proof to a phrase, or
+%                      proved a different statement.
+% \OWNCHECK{what}   -- a routine verification or a standard auxiliary fact we
+%                      state for convenience.  Fills no gap, so it is quieter.
+%
+% The four are distinguished by WEIGHT AND SIZE, not by colour: the book is
+% meant to survive printing and photocopying, and a grey \OWNCHECK against a
+% blue \OWNPROOF does not.  The hierarchy is
+%     UNVERIFIED / uncertain  (bold, loudest -- something is wrong or unknown)
+%     our proof               (bold label, roman body -- our contribution)
+%     check                   (small, italic label -- routine)
+%
+% A marker taking an argument must ALWAYS be used with one.  Left alone on a
+% line, \uncertain would swallow the next character as its argument and the
+% marker would vanish silently -- neither the build nor any checker catches it.
+\newcommand{\UNVERIFIED}[1]{%
+  [\textbf{UNVERIFIED}\ifx\relax#1\relax\else\textbf{:}\ #1\fi]}
+\newcommand{\uncertain}[1]{%
+  [\textbf{uncertain}\ifx\relax#1\relax\else\textbf{:}\ #1\fi]}
+\newcommand{\OWNPROOF}[1]{%
+  [\textbf{our proof}\ifx\relax#1\relax\else\textbf{:}\ #1\fi]}
+\newcommand{\OWNCHECK}[1]{%
+  {\small[\emph{check}\ifx\relax#1\relax\else:\ #1\fi]}}

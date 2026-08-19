@@ -1,3 +1,5 @@
+한국어 | [English](CLAUDE.en.md)
+
 # CLAUDE.md — 논문 독해용 맞춤 LaTeX 교재 프로젝트
 
 이 파일은 **정책(policy)** 이다. 프로젝트 진행 상태는 절대 여기에 기록하지 않는다.
@@ -151,7 +153,14 @@ sections_approved: []          # Phase 5의 paper/secNN
 Study/
   CLAUDE.md          # 이 파일 (정책, 거의 불변, 모든 프로젝트가 공유)
   PHASE1_PROBE_GUIDE.md  # Phase 1 세부 정책 (probe 선정 / K등급 판정). 공유
+  README.md
+  CLAUDE.en.md           # 위 셋의 영어판. 내용은 같고 언어만 다르다
+  PHASE1_PROBE_GUIDE.en.md
+  README.en.md
+  TRANSLATIONS           # 영어판이 어느 시점의 한국어판을 옮긴 것인가
+  translation-check.sh   # 한국어판이 바뀌어 영어판이 낡았는지 검사
   Source/            # 새 프로젝트를 시작할 때 통째로 복사하는 템플릿
+  Source-en/         # 같은 템플릿의 영어판. 영어로 진행하면 이쪽을 복사한다
   <프로젝트>/
     spec.md          # Project Specification (Phase 0 산출물) + Project Config
     background.md    # 지식 진단표 (Phase 1 산출물)

@@ -7,7 +7,18 @@
 !/README.md
 !/CLAUDE.md
 !/PHASE1_PROBE_GUIDE.md
+!/README.en.md
+!/CLAUDE.en.md
+!/PHASE1_PROBE_GUIDE.en.md
+!/TRANSLATIONS
+!/translation-check.sh
 !/Source/
+!/Source-en/
+
+# 루트는 허용 목록이므로 **새 파일은 기본적으로 무시된다.** 루트에 파일을
+# 추가할 때마다 여기에 한 줄을 더해야 하고, 잊으면 조용히 빠진다 (영어 번역본
+# 다섯 개가 실제로 그렇게 빠져 있었다). `Source/` 아래는 디렉터리째 살아 있어
+# 이 문제가 없다. 추가한 뒤 `git check-ignore -v <파일>`로 확인한다.
 
 .DS_Store
 
@@ -24,6 +35,7 @@
 *.out
 *.toc
 *.synctex.gz
-# The template's own build output. main.pdf of a real project never reaches
+# The templates' own build output. main.pdf of a real project never reaches
 # this repository anyway -- project folders are ignored wholesale above.
 /Source/tex/main.pdf
+/Source-en/tex/main.pdf

@@ -1,0 +1,16 @@
+# 영어판. `sh translation-check.sh`가 이 파일을 읽는다.
+#
+#   <영어판> | <한국어판> | <옮긴 시점 한국어판의 sha256> | <날짜>
+#
+# 해시를 얻는 법:  shasum -a 256 "<한국어판>"
+#
+# 루트의 정책 파일은 `<이름>.en.md`, 템플릿은 `Source-en/` 아래에 같은 이름으로
+# 둔다. 한국어판이 바뀌면 검사가 실패한다 — 영어판을 맞춘 뒤 해시를 갱신한다.
+
+README.en.md | README.md | e9eb8ed87b2472ad052bd93ecbe1bb753b4c3a3334fea0c8678fa7ca9137e1d6 | 2026-08-20
+CLAUDE.en.md | CLAUDE.md | 868ccff692d6e5ecd0634e5753062a2a4af216991f97ce335302295c5361130d | 2026-08-20
+PHASE1_PROBE_GUIDE.en.md | PHASE1_PROBE_GUIDE.md | 095626c88e009ee479ff1c2eca836204e7e23d99ebf4f380538cc2919b90620d | 2026-08-20
+Source-en/spec.md | Source/spec.md | 5240667cd7cef686035638a3cff0cffd35b8855e8a4332fc98f47bb6de1c30da | 2026-08-20
+Source-en/background.md | Source/background.md | f476bc76583a629c8da7d8e7cc220ade87bd52e33b83c3780142c63223b68008 | 2026-08-20
+Source-en/progress.md | Source/progress.md | 9b22ff99ce0f4ed29227272e9f60bb6afe3c9a14367d68ed9bbdd7c55b56a2e1 | 2026-08-20
+Source-en/refs/NOTES.md | Source/refs/NOTES.md | 85abd5728f06f985d06f7c1a32183b03c4de54625daaa9b11e0091c30cdf6d1b | 2026-08-20
