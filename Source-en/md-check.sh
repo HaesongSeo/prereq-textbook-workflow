@@ -319,11 +319,15 @@ GRADE_GLOSS = re.compile(
     '들어본 적|처음 보는|진술을 알아|정확히 진술|증명을 재구성|증명까지 재구성|'
     '진술과 출처만|싣지 않|예와 계산까지|진술만 갖다|가설을 확인해|'
     '증명 기법 자체를 흉내|배경으로 언급|'
-    # the English side of the same correspondence table
-    'Never heard of it|Recogni[sz]es the statement|Can state it precisely|'
-    'reconstruct the proof|statement and its source only|Not included|'
-    'examples and computations|Only the statement is borrowed|'
-    'checking the hypotheses|proof technique itself|Mentioned as background')
+    # The English side of the same correspondence table.  IGNORECASE applies
+    # to this half only in effect -- the Korean alternatives above are
+    # unaffected -- and it matters because a cell is typed by hand.
+    'never heard of it|recogni[sz]es the statement|cannot use it precisely|'
+    'can state it precisely|reconstruct the proof|statement and its source|'
+    'how the paper uses it|not included|examples and computations|'
+    'proof included|only the statement is borrowed|black box|'
+    'checking the hypotheses|proof technique itself|mentioned as background',
+    re.IGNORECASE)
 
 for f in MD:
     if not os.path.exists(f) or f.startswith('../'): continue
@@ -378,9 +382,17 @@ for f in MD:
 #   - the log names the chapter **Ch01** or **`Ch01`**.
 import re as _re
 def _APPROVED_CELL(line):
-    # the cell must be exactly the word, so "승인 대기" / "awaiting approval"
-    # in a longer cell never counts as an approval
-    return _re.search(r'\|\s*(?:승인|Approved)\s*\|', line)
+    # The cell must be exactly the word, so "승인 대기" / "awaiting approval"
+    # in a longer cell never counts as an approval.
+    #
+    # re.I is not decoration.  This verdict and _approved() below decide the
+    # SAME fact from two tables, and _approved() lower-cases before comparing.
+    # While this one matched capital "Approved" only, a log row written
+    # "approved" counted on one side and not the other, and the checker
+    # reported a disagreement between two tables that in fact agreed.  When one
+    # fact is judged in two places, the two judgements must share every rule --
+    # case, whitespace, normalisation.
+    return _re.search(r'\|\s*(?:승인|approved)\s*\|', line, _re.I)
 def _approved(cell):
     c = cell.lower()
     if '대기' in cell or 'awaiting' in c or 'pending' in c: return False

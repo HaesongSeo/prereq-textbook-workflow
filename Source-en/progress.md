@@ -91,6 +91,15 @@ through `\ref`, so **nothing checks them.** Build a script that extracts a
 (kind, number) table from the source PDF and collates it against the book
 (`tex/<paper>-check.sh`).
 
+**Filter out citations of other works when you build it.** Without that, a
+cited work's `Theorem 5` is reported as clashing with the target paper's
+`Lemma 5`. **A checker that raises false positives gets ignored, so this
+filtering decides whether the checker lives or dies.**
+
+- Judge a `\cite[...]{...}` **only when the key is the target paper.**
+- **Strip every `\cite[...]{...}` before scanning the prose.** Otherwise
+  another work's locator reads as body text.
+
 ## Build verification rules
 
 `tex/` contains **a skeleton that builds on its own** (`main.tex`,

@@ -1,15 +1,16 @@
-# 다른 프로젝트에서 fork해 온 장. `sh tex/import-check.sh`가 이 파일을 읽는다.
+# Chapters forked from another project. `sh tex/import-check.sh` reads this file.
 #
-#   <이 프로젝트의 파일명> | <원본 경로> | <원본 sha256> | <이 파일 sha256> | <날짜>
+#   <file in this project> | <origin path> | <origin sha256> | <this file's sha256> | <date>
 #
-# 해시 둘을 얻는 법:
-#   shasum -a 256 "<원본 경로>"      -> 3번째 칸 (갈라진 시점의 원본)
-#   shasum -a 256 "tex/<파일명>"     -> 4번째 칸 (손본 뒤의 우리 파일)
+# Getting the two hashes:
+#   shasum -a 256 "<origin path>"    -> column 3 (the origin as it was at the fork)
+#   shasum -a 256 "tex/<file>"       -> column 4 (our file after adaptation)
 #
-# 세 번째 칸이 어긋나면 **원본이** 바뀐 것이다. diff를 읽고 판단한다 —
-# 자동 병합하지 않는다. 수학 내용의 정본은 원본이다.
+# Column 3 disagreeing means THE ORIGIN moved. Read the diff and decide -- do
+# not auto-merge. The origin is authoritative for the mathematics.
 #
-# 네 번째 칸이 어긋나면 **우리가** 고친 것이다. 무엇을 고쳤는지 파일 첫머리에
-# 적고(표기·인용·참조면 `ADAPTED:`, 수학 오류 수정이면 `FIXED:`) 이 칸을
-# 갱신한다. 검사기는 둘을 구분하지 못하므로 사람이 적어야 한다
-# (CLAUDE.md 「교차 프로젝트 재사용」).
+# Column 4 disagreeing means WE changed it. Write what was changed at the top of
+# the file (`ADAPTED:` for notation, citations and references; `FIXED:` for a
+# mathematical correction) and update this column. The checker cannot tell the
+# two apart, so a human has to say which it was
+# (CLAUDE.en.md, "Cross-project reuse").

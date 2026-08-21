@@ -8,9 +8,11 @@
 # 둔다. 한국어판이 바뀌면 검사가 실패한다 — 영어판을 맞춘 뒤 해시를 갱신한다.
 
 README.en.md | README.md | e9eb8ed87b2472ad052bd93ecbe1bb753b4c3a3334fea0c8678fa7ca9137e1d6 | 2026-08-20
-CLAUDE.en.md | CLAUDE.md | 868ccff692d6e5ecd0634e5753062a2a4af216991f97ce335302295c5361130d | 2026-08-20
+CLAUDE.en.md | CLAUDE.md | 9fe1971a7f3a31eeba286c7355a62647ba527988346bdb837412968e4adff690 | 2026-08-22
 PHASE1_PROBE_GUIDE.en.md | PHASE1_PROBE_GUIDE.md | 095626c88e009ee479ff1c2eca836204e7e23d99ebf4f380538cc2919b90620d | 2026-08-20
 Source-en/spec.md | Source/spec.md | 5240667cd7cef686035638a3cff0cffd35b8855e8a4332fc98f47bb6de1c30da | 2026-08-20
 Source-en/background.md | Source/background.md | f476bc76583a629c8da7d8e7cc220ade87bd52e33b83c3780142c63223b68008 | 2026-08-20
-Source-en/progress.md | Source/progress.md | 9b22ff99ce0f4ed29227272e9f60bb6afe3c9a14367d68ed9bbdd7c55b56a2e1 | 2026-08-20
-Source-en/refs/NOTES.md | Source/refs/NOTES.md | 85abd5728f06f985d06f7c1a32183b03c4de54625daaa9b11e0091c30cdf6d1b | 2026-08-20
+Source-en/progress.md | Source/progress.md | 1d177765d196b74658d57bfbce9775a51cbb393d5d6384b8295285c21d843e4c | 2026-08-22
+Source-en/refs/NOTES.md | Source/refs/NOTES.md | 9348334189b8b5252b22d4b72169cd99f40c20dc50d7a5055b5c6558dc2da347 | 2026-08-22
+Source-en/tex/IMPORTS | Source/tex/IMPORTS | c18afce3e7775431a15b2084b15d2f44f5b7dddd49afbba1888f499568fae537 | 2026-08-22
+Source-en/tex/IMPORT-HEADER.txt | Source/tex/IMPORT-HEADER.txt | 1d91776ab2b15c8642019bcdd9a0e636bc7b30cd719c1d95bdabaab2820013d0 | 2026-08-22

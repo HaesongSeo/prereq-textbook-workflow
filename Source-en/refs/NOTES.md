@@ -43,9 +43,21 @@
 > there because a work was not obtained, that work must be listed here.
 > When it is later obtained, **fix both places together.**
 
-| Key | Item | What is needed | Can it be substituted | Where it is marked in the text |
-|---|---|---|---|---|
-| | | | | |
+| Key | Item | What is needed | Routes tried | Can it be substituted | Where it is marked in the text |
+|---|---|---|---|---|---|
+| | | | | | |
+
+> **Do not leave "Routes tried" empty.** A "not obtained" verdict errs in one
+> direction -- the search was stopped too early. To find out later whether an
+> untried route remains (the author's institutional page, a departmental page,
+> a copy the user holds), there has to be a record of where you looked.
+> **If a phase was closed with something still unobtained, open it again later.**
+>
+> **A differing edition belongs here too.** The work may sit in `refs/` while
+> the paper cites a different edition (published vs preprint), so the statement
+> checks out and only the number does not. **That is not an error in the
+> source.** With the PDF plainly in the directory it does not occur to anyone
+> that it still needs linking to a mark, so it is spelled out.
 
 ## What can be borrowed from a sibling project
 

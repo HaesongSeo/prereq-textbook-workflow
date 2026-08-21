@@ -48,8 +48,15 @@ import re, glob, os
 KIND = r'(?:thm|prop|lem|cor|def|defn|ex|rem|rmk|conv)'
 # Recursive, per CLAUDE.md: a checker sees only what its glob names, so a
 # chapter filed into a subdirectory must not fall outside it.
-files = [f for f in sorted(glob.glob('chapters/**/*.tex', recursive=True))
-         if not os.path.basename(f).startswith('ch00-')]   # ch00 is the template
+#
+# BOTH directories.  paper/ was missing here, so every Part II section sat
+# outside the check while the summary line still printed a count -- which reads
+# as a fact about the book but was only ever a statement about the glob.
+# paper/sec00-example.tex carries the same summary table, so the omission was
+# plain once looked at.
+files = [f for f in sorted(glob.glob('chapters/**/*.tex', recursive=True)
+                           + glob.glob('paper/**/*.tex', recursive=True))
+         if not re.match(r'(ch|sec)00-', os.path.basename(f))]  # 00 is a template
 missing_total = notable = 0
 for f in files:
     src = open(f, encoding='utf-8', errors='replace').read()
@@ -66,7 +73,7 @@ for f in files:
         print(f'  {f}: {len(gaps)}/{len(items)} not in the table -- '
               + ', '.join(gaps[:6]) + (' ...' if len(gaps) > 6 else ''))
         missing_total += len(gaps)
-print(f'  {len(files)} chapter file(s); {notable} without a summary table; '
+print(f'  {len(files)} chapter/section file(s); {notable} without a summary table; '
       f'{missing_total} item(s) missing from a table')
 PY
 

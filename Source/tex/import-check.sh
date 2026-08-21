@@ -14,8 +14,8 @@
 # reports drift, read the diff and decide; the ADAPTED list in the file's
 # provenance block is the recipe for re-applying the changes.
 #
-# The rule (CLAUDE.md, "정본의 방향"): the ORIGIN is authoritative for the
-# mathematics, but an error found here is corrected HERE and listed under
+# The rule ("정본의 방향" / "The direction of authority", in the shared
+# policy file): the ORIGIN is authoritative for the mathematics, but an error found here is corrected HERE and listed under
 # FIXED: in the provenance block -- it is not pushed back to the origin. So
 # ADAPTED and FIXED are the only things allowed to differ, and both have to be
 # written down. This script is what makes "written down" non-optional.

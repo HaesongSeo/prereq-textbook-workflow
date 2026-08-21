@@ -1,21 +1,23 @@
-이 블록을 import한 .tex 파일의 **맨 첫 줄부터** 붙인다. 주석이므로 인쇄되지
-않는다. `import-check.sh`가 `IMPORTED CHAPTER` 문자열의 존재를 확인하므로 그
-줄은 지우지 않는다.
+Paste this block at the VERY FIRST LINE of the imported .tex file. It is a
+comment, so it is not printed. `import-check.sh` confirms that the string
+`IMPORTED CHAPTER` is present, so do not delete that line.
 
-`ADAPTED:` 목록이 이 블록의 핵심이다. 원본이 고쳐져 다시 가져올 때, 그 목록이
-그대로 조리법이 된다. 「손봤다」가 아니라 **무엇을 무엇으로** 바꿨는지 적는다.
+The `ADAPTED:` list is the heart of this block. When the origin is corrected
+and the chapter is re-imported, that list is the recipe. Write **what was
+changed into what**, not "adapted".
 
-`FIXED:`는 다른 것이다 — 가져온 뒤 **수학 오류를 발견해 이쪽만 고친 것**의
-목록이다 (CLAUDE.md 「정본의 방향」). 적응은 두 책이 다른 것이 정상이지만
-이쪽은 원본이 아직 틀린 채로 있다는 뜻이므로, 둘을 섞어 적지 않는다.
-고친 것이 없으면 `FIXED:` 줄을 지운다.
+`FIXED:` is a different thing -- the list of mathematical errors found after
+the import and corrected HERE (CLAUDE.en.md, "The direction of authority").
+An adaptation is something the two books are meant to differ on; a FIXED entry
+means the origin is still wrong. Do not mix them. Drop the `FIXED:` section if
+nothing was corrected.
 
---------------------------------- 여기부터 ---------------------------------
+--------------------------------- from here ---------------------------------
 
 % ===========================================================================
 % IMPORTED CHAPTER -- a fork, not a copy.
 %
-% Origin : ../../<프로젝트>/tex/chapters/<파일>.tex
+% Origin : ../../<project>/tex/chapters/<file>.tex
 % Forked : <YYYY-MM-DD>, from the revision recorded in tex/IMPORTS.
 %
 % The origin refers into its own book and cites its own target paper, so it
@@ -23,12 +25,12 @@
 % below; nothing else was touched.
 %
 % ADAPTED:
-%   - \cite{<원본 키>}  ->  <이 책에서의 대응>      (목표 논문이 다르다)
-%   - \ref{<원본 라벨>} ->  \ref{<이 책의 라벨>}   (또는: 문장을 자립시켰다)
-%   - \<원본 매크로>    ->  \<이 책의 매크로>
+%   - \cite{<origin key>}  ->  <what it is here>        (the target paper differs)
+%   - \ref{<origin label>} ->  \ref{<label in this book>}  (or: sentence made self-contained)
+%   - \<origin macro>      ->  \<macro in this book>
 %   - chapter header rewritten: what this supports is different here
 %
-% FIXED: (drop this section if empty -- see CLAUDE.md, "the direction of
+% FIXED: (drop this section if empty -- see CLAUDE.en.md, "the direction of
 % authority". These are mathematical corrections made HERE; the origin still
 % carries the error.)
 %   - <what was wrong>  ->  <what it now says>

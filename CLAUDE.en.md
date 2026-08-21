@@ -199,7 +199,7 @@ Study/
       back/appendix-*.tex        # tables the reader needs (notation map, source errata)
 ```
 
-**A new project starts by copying `Source/`.** Do not reinvent what the
+**A new project starts by copying `Source-en/`.** Do not reinvent what the
 template already contains -- the session-start procedure, the checker scripts,
 how length is measured, how scans are handled, the form for recording what has
 been obtained.
@@ -483,6 +483,23 @@ the paper has already written.**
   name").
 - The target goes in `spec.md` under "Phase 5 (close reading): order and
   length"; the measurement goes in `progress.md` under "Close-reading status".
+
+#### Target and measurement miss in one direction
+
+Keep the formula, but start knowing that **the two targets miss in opposite
+directions.** It is not random error but a structural bias coming from where
+each target was drawn.
+
+| | Where the target comes from | How to read it |
+|---|---|---|
+| Part I | The item count we chose | **It behaves like a cap, and the measurement falls below it** |
+| Part II | The source's page count | **Read it as a floor** |
+
+Part II is like that because the reason it exists is to unfold what the source
+compressed -- **coming out the same length as the source means it was
+transcribed, not read.** In Part I, a chapter whose target slightly exceeds
+`PER_CHAPTER_MAX` is not by itself a reason to change the plan; the measurement
+commonly comes in below it.
 
 ### Exit conditions
 

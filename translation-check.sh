@@ -13,8 +13,14 @@
 # which is the part a machine can actually decide.
 #
 # It checks a second thing too: the two templates. Source/ and Source-en/ differ
-# only in their .md files -- the scripts, the .sty files and the .tex skeleton
-# must stay byte-identical, or a fix to one template silently misses the other.
+# only in the files that carry PROSE -- the scripts, the .sty files and the .tex
+# skeleton must stay byte-identical, or a fix to one template silently misses
+# the other.
+#
+# "Prose" is not the same as ".md". IMPORTS and IMPORT-HEADER.txt are documents
+# that happen not to carry that extension, and they get translated like any
+# other document; comparing them byte-for-byte would fail the moment they were.
+# They are listed in TRANSLATIONS instead, with the rows above.
 # The one legitimate difference (md-check.sh points at its own language's root
 # policy files) is normalised away rather than allowed as a line count, so that
 # any OTHER difference still fails.
@@ -70,6 +76,7 @@ else
   # subdirectory must not fall outside the comparison.
   for f in $(cd "$KO" && find . -type f \
         ! -name '*.md' ! -name '.DS_Store' \
+        ! -name 'IMPORTS' ! -name 'IMPORT-HEADER.txt' \
         ! -name '*.aux' ! -name '*.bbl' ! -name '*.blg' ! -name '*.fdb_latexmk' \
         ! -name '*.fls' ! -name '*.log' ! -name '*.out' ! -name '*.toc' \
         ! -name '*.pdf' ! -name '*.synctex.gz' | sort); do
@@ -80,6 +87,11 @@ else
     fi
     # Normalise the one difference that is meant to exist, then require an
     # exact match. Anything else -- a fix applied to one template only -- fails.
+    #
+    # A consequence worth knowing: a shared file must not name CLAUDE.en.md
+    # (or the other two) even when both copies name it identically, because
+    # only the English copy gets rewritten and the two then differ. Refer to
+    # the policy file without its language suffix instead.
     if ! sed -e 's/CLAUDE\.en\.md/CLAUDE.md/g' \
              -e 's/PHASE1_PROBE_GUIDE\.en\.md/PHASE1_PROBE_GUIDE.md/g' \
              -e 's/README\.en\.md/README.md/g' "$EN/$f" \
@@ -92,6 +104,7 @@ else
   # A file that exists only on the English side is drift too.
   for f in $(cd "$EN" && find . -type f \
         ! -name '*.md' ! -name '.DS_Store' \
+        ! -name 'IMPORTS' ! -name 'IMPORT-HEADER.txt' \
         ! -name '*.aux' ! -name '*.bbl' ! -name '*.blg' ! -name '*.fdb_latexmk' \
         ! -name '*.fls' ! -name '*.log' ! -name '*.out' ! -name '*.toc' \
         ! -name '*.pdf' ! -name '*.synctex.gz' | sort); do
