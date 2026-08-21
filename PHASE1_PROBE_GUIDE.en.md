@@ -2,15 +2,15 @@
 
 # PHASE1_PROBE_GUIDE.md -- probe selection and K grading
 
-This file is **policy**. It subdivides Phase 1 of `CLAUDE.md` and is shared by
+This file is **policy**. It subdivides Phase 1 of `CLAUDE.en.md` and is shared by
 every project. Progress is never recorded here -- state lives in each project's
 `background.md`.
 
-**Within the scope `CLAUDE.md` delegates to this file** (node selection, probe
+**Within the scope `CLAUDE.en.md` delegates to this file** (node selection, probe
 grading, grade propagation, the column layout of the diagnosis table) **this
-file is authoritative.** Outside it, `CLAUDE.md` wins in a conflict.
+file is authoritative.** Outside it, `CLAUDE.en.md` wins in a conflict.
 
-What is **not** fixed here (all of it is in `CLAUDE.md` Phase 1 and is not
+What is **not** fixed here (all of it is in `CLAUDE.en.md` Phase 1 and is not
 repeated): the definitions of the knowledge scale K0-K3, the question budget
 (items per turn, total turns), the language and typesetting constraints on
 probes, the procedure for fixing the baseline, the depth table (usage x K
@@ -33,7 +33,7 @@ of one question is measured by whether its answer moves an L.
 A high grade needs evidence. But **grading low is not free either.** The idea
 that lowering a grade errs on the safe side is wrong. Lowering a K means (a)
 material the reader already knows gets written out again (in direct conflict
-with the objective in `CLAUDE.md` §1 and with the prohibitions), and (b) that
+with the objective in `CLAUDE.en.md` §1 and with the prohibitions), and (b) that
 much space comes out of the L4 items that actually needed it.
 
 ---
@@ -70,13 +70,13 @@ changes, while a conservative default inherited no grounds at all.
 
 **The vocabulary of direction is fixed here, once.** On the edge "to understand
 A you need B", B is called A's **prerequisite** and A is B's **dependent**.
-This file, `CLAUDE.md` and `background.md` use only those two words --
+This file, `CLAUDE.en.md` and `background.md` use only those two words --
 "higher/lower" is not used, because it reads in exactly opposite ways depending
 on which side one takes to be fundamental and which advanced.
 
 That one sentence mixes two things of different character, and different
 amounts propagate along them. **The kind is written on each edge in Phase 0**
-(`CLAUDE.md` §0-3).
+(`CLAUDE.en.md` §0-3).
 
 | Edge | Meaning | Example |
 |---|---|---|
@@ -106,7 +106,7 @@ them.**
 
 ### 3-2. Positive inheritance (prerequisite K2 or above, toward the dependents)
 
-Follow "Search strategy" in `CLAUDE.md` -- if a prerequisite is K2 or above,
+Follow "Search strategy" in `CLAUDE.en.md` -- if a prerequisite is K2 or above,
 assume the nodes depending on it are K2 and spot-check exactly one of them.
 **There is no one-step limit here.** This is not a cap the graph enforces but a
 way of saving the question budget, and the spot-check is the safety device. If
@@ -130,7 +130,7 @@ wrong.** The cause is one of three.
 In every case, **do not cut the direct evidence down.** If writing that node
 thin still feels unsafe, **raise the depth by one step, not the K.** There is
 already a procedure for writing the reason and getting approval (the exception
-to the depth table in `CLAUDE.md`). Unlike manipulating a K, this leaves a
+to the depth table in `CLAUDE.en.md`). Unlike manipulating a K, this leaves a
 trace and does not break Phase 4's do-not-re-explain judgement.
 
 ---
@@ -183,7 +183,7 @@ performance rather than self-report, and decides the boundary it aims at.
   the user. If something is to be disclosed, write in plain language what the
   answer changes in the textbook -- "your answer decides whether this theorem is
   quoted as a statement or explained with an example" (use the correspondence
-  table in `CLAUDE.md`, "How to talk to the user").
+  table in `CLAUDE.en.md`, "How to talk to the user").
 - Do not round a partial answer up. "I remember being able to do it" is K1, not
   K2.
 - **No answer is not K0; it is no evidence.** If the curriculum hangs on it,
@@ -191,7 +191,7 @@ performance rather than self-report, and decides the boundary it aims at.
   reissue has in fact settled a K0). If it does not, leave it as `estimated`.
 - **Self-assignment.** If the user names a grade themselves, use it as direct
   evidence and write `self-assigned` in the grounds column. But saying "I know
-  it" is not self-assignment (`CLAUDE.md`).
+  it" is not self-assignment (`CLAUDE.en.md`).
 
 **Answers not used as grounds for a grade:**
 
@@ -254,9 +254,9 @@ explained sufficiently.
   by §4.
 - **Propagating a cap transitively.** One step toward the dependents (§3-1).
   Positive inheritance is not subject to this limit (§3-2).
-- Self-report questions of the "do you know X?" form (`CLAUDE.md`).
+- Self-report questions of the "do you know X?" form (`CLAUDE.en.md`).
 - **Exposing grade, boundary or tag codes as they are in an item or in the
-  grading explanation** (§6, `CLAUDE.md`, "How to talk to the user"). Even when
+  grading explanation** (§6, `CLAUDE.en.md`, "How to talk to the user"). Even when
   reporting a grade, not "I'll put you at K1" but "I'll take it as recognising
   the statement without being able to use it precisely (K1)".
 - Exceeding the budget on the grounds that "one more item would make it

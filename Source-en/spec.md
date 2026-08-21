@@ -10,9 +10,9 @@
 
 ## Project Config
 
-> `CLAUDE.md` sits at the `Study/` root and is shared by several projects.
+> `CLAUDE.en.md` sits at the `Study/` root and is shared by several projects.
 > **The config goes here, in each project.** If it is empty, do not start
-> Phase 0 -- ask first. For what each field means, see `CLAUDE.md` §0.
+> Phase 0 -- ask first. For what each field means, see `CLAUDE.en.md` §0.
 
 ```yaml
 TARGET_PAPER:
@@ -55,7 +55,7 @@ where it appears in the paper
 > manipulated and applied / D the proof technique imitated
 >
 > In the "Usage" column write only the letter (`C`, `B/C`). The same goes for
-> the "Depth" column of the chapter plan -- write `L0`-`L4` (`CLAUDE.md`, "How
+> the "Depth" column of the chapter plan -- write `L0`-`L4` (`CLAUDE.en.md`, "How
 > to talk to the user").
 >
 > **The edge kind is written in Phase 0, without fail.** `definition` = the
@@ -63,7 +63,7 @@ where it appears in the paper
 > cannot be written precisely) / `proof` = the prerequisite is used *only in
 > this node's proof* (the statement reads without it). Phase 1's grade
 > propagation works differently in the two cases
-> (`PHASE1_PROBE_GUIDE.md` §3). Attaching it later means re-reading the whole
+> (`PHASE1_PROBE_GUIDE.en.md` §3). Attaching it later means re-reading the whole
 > graph.
 
 ## Notation glossary
@@ -83,7 +83,7 @@ macros.
 
 > The authority on bibliographic data is `tex/refs.bib`; **the authority on
 > what has been obtained is `refs/NOTES.md`**. Do not record what has been
-> obtained in `refs.bib`'s `note` (`CLAUDE.md`, verification rules).
+> obtained in `refs.bib`'s `note` (`CLAUDE.en.md`, verification rules).
 
 | Key | Item | Used for |
 |---|---|---|
@@ -93,7 +93,7 @@ macros.
 
 > A record of collating the theorem numbers the paper cites against the real
 > documents. **Check the entries where the same author has several papers
-> first** (`CLAUDE.md`, verification rules).
+> first** (`CLAUDE.en.md`, verification rules).
 
 | Citation | As the paper writes it | The real document | Verdict |
 |---|---|---|---|
@@ -132,7 +132,7 @@ macros.
 > and it only becomes recognisable after seeing where it is used.
 >
 > **Length.** The target is **the section's page count in the source, as it
-> is** (`CLAUDE.md` Phase 2, "The length of Part II"). This total is **not
+> is** (`CLAUDE.en.md` Phase 2, "The length of Part II"). This total is **not
 > subject to a budget** -- `TOTAL_PAGE_BUDGET` covers only the preparatory
 > chapters. The measurement departing from the target is normal (a section the
 > preparatory chapters already prepared for gets shorter; a section the paper
@@ -166,7 +166,7 @@ macros.
 > records turns out to be wrong, that too stays here **as a withdrawal.**
 >
 > **This section goes out as a reader-facing appendix in Phase 6**
-> (`CLAUDE.md`, Phase 6 exit conditions). The footnotes stay where they were
+> (`CLAUDE.en.md`, Phase 6 exit conditions). The footnotes stay where they were
 > found and the list goes in the appendix separately -- a reader collating
 > against the source needs the list in one place.
 
@@ -179,7 +179,7 @@ macros.
   makes collating with the paper easier for the reader).
 - **The number in `paper/secNN` = the paper's section number.** The order is
   fixed by the `\include` order in `main.tex` and by "Phase 5 (close reading):
-  order and length" above (`CLAUDE.md` Phase 5). If a section runs long, split
+  order and length" above (`CLAUDE.en.md` Phase 5). If a section runs long, split
   it into `sec05a` / `sec05b`.
 
 ## Amendments

@@ -23,13 +23,13 @@ written here were put up at the spot where something failed.
 
 | File | Role |
 |---|---|
-| `CLAUDE.md` | Project policy. The Phase 0-6 procedure, the depth-decision rule, the verification rules, the prohibitions |
-| `PHASE1_PROBE_GUIDE.md` | The detail policy for background diagnosis (Phase 1): which node to ask about, how to turn an answer into a grade, how to fill in the nodes never asked about |
+| `CLAUDE.en.md` | Project policy. The Phase 0-6 procedure, the depth-decision rule, the verification rules, the prohibitions |
+| `PHASE1_PROBE_GUIDE.en.md` | The detail policy for background diagnosis (Phase 1): which node to ask about, how to turn an answer into a grade, how to fill in the nodes never asked about |
 | `Source/` | The template copied wholesale to start a new project |
 | `Source-en/` | The same template in English. Copy this one to work in English |
 
-`Source/` holds the three management documents (`spec.md`, `background.md`,
-`progress.md`) and the checker scripts. Those three are the authority on
+`Source-en/` holds the three management documents (`spec.md`,
+`background.md`, `progress.md`) and the checker scripts. Those three are the authority on
 state -- the policy files never record progress.
 
 ## The procedure
@@ -74,7 +74,7 @@ turn, six turns total), so the graph is searched by bisection rather than
 surveyed exhaustively. **A measured value and a value inferred from the graph
 never share a cell** -- once that distinction collapses, material the reader
 already knows gets written out again, and those pages come out of the proofs
-that were actually needed. The rules are in `PHASE1_PROBE_GUIDE.md`.
+that were actually needed. The rules are in `PHASE1_PROBE_GUIDE.en.md`.
 
 ## The machinery against invention
 
@@ -146,7 +146,7 @@ cd Study
 cp -R Source-en "my paper"
 ```
 
-Open Claude Code in `Study/`. `CLAUDE.md` sits at the root and is shared by
+Open Claude Code in `Study/`. `CLAUDE.en.md` sits at the root and is shared by
 every project; per-project settings go at the top of that project's `spec.md`.
 For the first prompt, use the example under "Starting a new session" in
 `Source-en/progress.md`.

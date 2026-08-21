@@ -297,20 +297,33 @@ def _front_matter(path):
 #
 # Only project files are checked.  CLAUDE.md and PHASE1_PROBE_GUIDE.md DEFINE
 # the codes and gloss them in prose tables on purpose.
-GRADE_COLS = {'사용 방식': r'(?<![A-Za-z])[A-D](?![A-Za-z])',
-              '직접'     : r'K[0-3]',
-              '추정'     : r'K[0-3]',
-              '추정 K'   : r'K[0-3]',
-              '확정 K'   : r'K[0-3]',
-              '깊이'     : r'L[0-4]',
-              '확정 깊이': r'L[0-4]',
-              '제안 깊이': r'L[0-4]'}
+# Both templates use this same file, so every heading and vocabulary below is
+# listed in BOTH languages.  Source-en/ differs from Source/ only in the MD
+# list at the top; if a check is keyed to Korean strings alone it silently
+# passes everything in an English project -- which is worse than not having it.
+_USAGE = r'(?<![A-Za-z])[A-D](?![A-Za-z])'
+_K, _L = r'K[0-3]', r'L[0-4]'
+GRADE_COLS = {'사용 방식': _USAGE, 'Usage'         : _USAGE,
+              '직접'     : _K,     'Direct'        : _K,
+              '추정'     : _K,     'Inferred'      : _K,
+              '추정 K'   : _K,     'Inferred K'    : _K,
+              '확정 K'   : _K,     'Final K'       : _K,
+              '깊이'     : _L,     'Depth'         : _L,
+              '확정 깊이': _L,     'Final depth'   : _L,
+              '제안 깊이': _L,     'Proposed depth': _L}
 GRADE_WORDS = ('baseline', '논문 고유', '인용', '재사용', '해당 없음', '없음',
-               'n/a', '미정', '상속', '추정', 'probe', '자기지정')
+               'n/a', '미정', '상속', '추정', 'probe', '자기지정',
+               'paper-specific', 'inherited', 'estimated', 'self-assigned',
+               'undecided', 'none')
 GRADE_GLOSS = re.compile(
     '들어본 적|처음 보는|진술을 알아|정확히 진술|증명을 재구성|증명까지 재구성|'
     '진술과 출처만|싣지 않|예와 계산까지|진술만 갖다|가설을 확인해|'
-    '증명 기법 자체를 흉내|배경으로 언급')
+    '증명 기법 자체를 흉내|배경으로 언급|'
+    # the English side of the same correspondence table
+    'Never heard of it|Recogni[sz]es the statement|Can state it precisely|'
+    'reconstruct the proof|statement and its source only|Not included|'
+    'examples and computations|Only the statement is borrowed|'
+    'checking the hypotheses|proof technique itself|Mentioned as background')
 
 for f in MD:
     if not os.path.exists(f) or f.startswith('../'): continue
@@ -364,8 +377,14 @@ for f in MD:
 #     word 승인 in others;
 #   - the log names the chapter **Ch01** or **`Ch01`**.
 import re as _re
+def _APPROVED_CELL(line):
+    # the cell must be exactly the word, so "승인 대기" / "awaiting approval"
+    # in a longer cell never counts as an approval
+    return _re.search(r'\|\s*(?:승인|Approved)\s*\|', line)
 def _approved(cell):
-    return ('대기' not in cell) and ('승인' in cell or '☑' in cell)
+    c = cell.lower()
+    if '대기' in cell or 'awaiting' in c or 'pending' in c: return False
+    return ('승인' in cell) or ('approved' in c) or ('☑' in cell)
 _prog = 'progress.md'
 if os.path.exists(_prog):
     _txt = open(_prog, encoding='utf-8').read()
@@ -378,11 +397,12 @@ if os.path.exists(_prog):
         _c = [x.strip() for x in _l.strip().strip('|').split('|')] \
              if _l.lstrip().startswith('|') else []
         if len(_c) >= 4 and _re.fullmatch(r'\d{2}', _c[0]) \
-                and ('신규' in _l or 'import:' in _l):
+                and (_re.search(r'\|\s*(?:신규|new)\s*\|', _l, _re.I)
+                     or 'import:' in _l):
             if _approved(_c[-1]):
                 _ticked.add(_c[0])
         _m2 = _re.search(r'\*\*`?Ch(\d{2})`?\*\*', _l)
-        if _m2 and '| 승인 |' in _l:
+        if _m2 and _APPROVED_CELL(_l):
             _logged.add(_m2.group(1))
     for _ch in sorted(_ticked - _logged):
         issues.append(('approval', f'{_prog}',
@@ -414,10 +434,10 @@ if os.path.exists(_prog):
         if _m3 and _approved(_c[3]):
             _sticked.add(_m3.group(1))
         _m4 = _re.search(r'\*\*`?sec(\d{2}[ab]?)`?\*\*', _l)
-        if _m4 and '| 승인 |' in _l:
+        if _m4 and _APPROVED_CELL(_l):
             _slogged.add(_m4.group(1))
         _m5 = _re.search(r'\*\*`?P(\d{1,2})([ab]?)`?\*\*', _l)
-        if _m5 and '| 승인 |' in _l:
+        if _m5 and _APPROVED_CELL(_l):
             _slogged.add(f'{int(_m5.group(1)):02d}{_m5.group(2)}')
     for _s in sorted(_sticked - _slogged):
         issues.append(('approval', f'{_prog}',
@@ -447,10 +467,12 @@ if os.path.exists(_prog):
         # The prose bullet restates the phase for a human; it must at least
         # mention the canonical number, or the two are telling different stories.
         for _l in _txt.split('\n'):
-            if _l.startswith('- 현재 Phase:') and _ph and _ph not in _l:
+            if (_l.startswith('- 현재 Phase:')
+                    or _l.startswith('- Current phase:')) \
+                    and _ph and _ph not in _l:
                 bad('state', _prog,
-                    f'state block says phase {_ph}, "현재 Phase" line does not '
-                    f'mention it')
+                    f'state block says phase {_ph}, but the "current phase" '
+                    f'line does not mention it')
         _fmch = set(_re.findall(r'\d{2}', _fm.get('chapters_approved', '')))
         _fmsec = set(_re.findall(r'\d{2}[ab]?', _fm.get('sections_approved', '')))
         for _ch in sorted(_fmch - _logged):

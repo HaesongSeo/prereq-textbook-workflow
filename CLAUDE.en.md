@@ -49,7 +49,7 @@ understand the target paper.
 **The grade codes are our working apparatus, not the user's.** `K0`-`K3`,
 `L0`-`L4`, the usage tags `A`-`D`, the edge kinds (definition/proof), node IDs
 (`N01`) and baseline item numbers all have meaning only inside this file,
-`PHASE1_PROBE_GUIDE.md`, and the management documents. The user does not have
+`PHASE1_PROBE_GUIDE.en.md`, and the management documents. The user does not have
 those files open while talking. So holding out a bare code in the chat conveys
 nothing.
 
@@ -256,7 +256,7 @@ Extract the following from the paper.
 - Tag every node with **how the paper uses it**, A-D (see the depth rules).
 - **Write the kind on every edge** -- `definition` (B appears *inside A's
   statement*) / `proof` (B is used *only in A's proof*). Phase 1's grade
-  propagation only holds on top of this distinction (`PHASE1_PROBE_GUIDE.md`
+  propagation only holds on top of this distinction (`PHASE1_PROBE_GUIDE.en.md`
   §3). Attaching it later means re-reading the whole graph.
 - Do not survey hidden assumptions and omitted proofs at this stage. They are
   handled on arriving at the section in question.
@@ -289,7 +289,7 @@ procedure.**
 
 Goal: grade every node `K0/K1/K2/K3`.
 
-**Read `PHASE1_PROBE_GUIDE.md` when starting Phase 1.** That file is
+**Read `PHASE1_PROBE_GUIDE.en.md` when starting Phase 1.** That file is
 authoritative on which node to ask about, how to turn an answer into a grade,
 and how to fill in the nodes never asked about. What follows is the skeleton it
 presumes.
@@ -321,7 +321,7 @@ presumes.
 - Every probe must be answerable in five lines or fewer.
 - **Do not put the grade names in the item.** Write in plain language what the
   answer changes in the textbook (see "How to talk to the user",
-  `PHASE1_PROBE_GUIDE.md` §6).
+  `PHASE1_PROBE_GUIDE.en.md` §6).
 - At most five questions per turn, at most six turns for all of Phase 1.
 - If the user only says "I know it", do not raise them to K2 or above. Have
   them answer a probe or name the grade themselves.
@@ -340,7 +340,7 @@ reads in exactly opposite ways.
   breaks.
 - If a node is K1 or below, **go down to its prerequisites.**
 - That is, bisect on the graph. Do not ask exhaustively.
-- **`PHASE1_PROBE_GUIDE.md` is authoritative on propagating a low grade toward
+- **`PHASE1_PROBE_GUIDE.en.md` is authoritative on propagating a low grade toward
   the dependents, on what to do when direct evidence and inference disagree, on
   the priority for choosing nodes, and on grading probes.** None of that is
   repeated here.
@@ -360,12 +360,12 @@ separately.** A measured value and an inferred value never share a cell -- this
 file's K column is also what decides "do not re-explain anything at K2 or
 above" in Phase 4, so which one it was has to remain recoverable.
 
-**`PHASE1_PROBE_GUIDE.md` §7 is authoritative on the column layout.** It is not
+**`PHASE1_PROBE_GUIDE.en.md` §7 is authoritative on the column layout.** It is not
 repeated here.
 
 ### Exit conditions
 
-**`PHASE1_PROBE_GUIDE.md` §8 is authoritative.** Not repeated here.
+**`PHASE1_PROBE_GUIDE.en.md` §8 is authoritative.** Not repeated here.
 
 ---
 
@@ -856,7 +856,7 @@ is produced**, so there is no way to prevent them other than knowing them.
 
 ## Authority and copies
 
-The same table living in two places is normal -- `README.md` has to introduce
+The same table living in two places is normal -- `README.en.md` has to introduce
 the method and `background.md` has to sit open while grading. **The problem is
 one side being fixed and nobody noticing.**
 
@@ -869,11 +869,11 @@ So copies are marked. These are HTML comments and do not render on GitHub.
 
 **The rule is "a copy may cover the authority, but may not change it."** Every
 cell of the copy must **contain** the corresponding cell of the authority, and
-the two tables must have the same number of rows and columns. So `README.md`
+the two tables must have the same number of rows and columns. So `README.en.md`
 adding a gloss like `| **A** background mention only |` passes, while changing
 an `L1` to `L2` or deleting a row does not. `md-check.sh` item 10 checks it.
 
-- The authority is always `CLAUDE.md` or `PHASE1_PROBE_GUIDE.md`. Authority is
+- The authority is always `CLAUDE.en.md` or `PHASE1_PROBE_GUIDE.en.md`. Authority is
   not placed outside the policy files.
 - To change a table, **change the authority and run the checker.** The checker
   points at the copies.
@@ -918,11 +918,11 @@ everything:
 - Running Phase 0 without the full text of the paper
 - Re-explaining anything graded K2 or above in `background.md`
 - Cutting direct evidence down by graph inference in Phase 1
-  (`PHASE1_PROBE_GUIDE.md` §1, §4)
+  (`PHASE1_PROBE_GUIDE.en.md` §1, §4)
 - Writing a chapter that is not in `spec.md`
 - **Stating a theorem without a source**
 - **Inventing a reference or a theorem number**
-- Recording state in this file (`CLAUDE.md`). The Project Config also goes in
+- Recording state in this file (`CLAUDE.en.md`). The Project Config also goes in
   each project's `spec.md` (§0)
 - Writing a length in two places. `progress.md`'s "Measured length" is the only
   authority

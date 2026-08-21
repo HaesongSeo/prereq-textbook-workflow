@@ -11,21 +11,21 @@ sections_approved: []
 
 > The first file read at the start of a session. **The state block at the top
 > is authoritative for `phase`, `last_approved` and the list of approved
-> chapters** (`CLAUDE.md` §2, "The state block"). The prose of "Current state"
+> chapters** (`CLAUDE.en.md` §2, "The state block"). The prose of "Current state"
 > below carries what the block cannot -- it does not write the same fact twice.
 
 ## Starting a new session
 
 1. Set the working directory to **`Study/<project name>/`**.
-   (`CLAUDE.md` at the `Study/` root is the policy file and is shared by every
+   (`CLAUDE.en.md` at the `Study/` root is the policy file and is shared by every
    project, so which project this is has to be specified first.)
 2. Read `progress.md` -> `spec.md` -> `background.md` in that order, following
-   the session protocol in `CLAUDE.md` §2.
+   the session protocol in `CLAUDE.en.md` §2.
    **Check all three at the end of every turn.** If nothing needs changing,
    just confirm that.
    (`background.md` is a Phase 1 output and usually has nothing to change, but
    confirming "nothing" is part of the procedure.)
-   If Phase 1 is in progress, also read `PHASE1_PROBE_GUIDE.md` at the `Study/`
+   If Phase 1 is in progress, also read `PHASE1_PROBE_GUIDE.en.md` at the `Study/`
    root. That file is authoritative on probe selection and K grading.
 3. Run the checks **in this order** (see "Checker scripts" below).
    `sh tex/check.sh` -> `sh md-check.sh` -> `sh tex/notation-check.sh` ->
@@ -66,7 +66,7 @@ this PDF".
 > through every time. Fill them once Phase 1 ends, then keep to the
 > do-not-re-explain rule by looking only at these each turn.
 > **List node names only** -- do not spell out what the grades mean here
-> (`CLAUDE.md`, "How to talk to the user").
+> (`CLAUDE.en.md`, "How to talk to the user").
 
 ## Approval log
 
@@ -118,7 +118,7 @@ Build artefacts (`.aux`, `.log`, `.toc`, `.bbl` and so on) **are not deleted.**
 only.
 
 **Run `sh tex/check.sh` without fail before a chapter is finalised.** Do not
-inspect the log with an improvised `grep`. For the reason see `CLAUDE.md`'s
+inspect the log with an improvised `grep`. For the reason see `CLAUDE.en.md`'s
 verification rules (a single non-ASCII character makes `main.log` binary and
 silences `grep`).
 
@@ -138,9 +138,9 @@ management documents.
 
 > "Origin" is **new** or **import: `<project>/<file>`**. An imported chapter is
 > also registered in `tex/IMPORTS` and watched for drift with
-> `sh tex/import-check.sh` (`CLAUDE.md`, "Cross-project reuse").
+> `sh tex/import-check.sh` (`CLAUDE.en.md`, "Cross-project reuse").
 
-> Checks = the five items in `CLAUDE.md` Phase 4
+> Checks = the five items in `CLAUDE.en.md` Phase 4
 
 ## Close-reading status (Phase 5)
 

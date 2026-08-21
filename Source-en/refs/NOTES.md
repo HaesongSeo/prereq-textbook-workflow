@@ -2,7 +2,7 @@
 
 > **This file is the authority on what has been obtained.** Do not record it in
 > the `note` field of `tex/refs.bib` -- that gets printed into the bibliography
-> (`CLAUDE.md`, verification rules).
+> (`CLAUDE.en.md`, verification rules).
 
 ## The paper itself
 
@@ -37,7 +37,7 @@
 ## Not obtained
 
 > This table and the `\UNVERIFIED{}` marks in the text are **linked in both
-> directions** (`CLAUDE.md`, the three states in the verification rules). If a
+> directions** (`CLAUDE.en.md`, the three states in the verification rules). If a
 > statement cited from a work listed here appears in the text, there must be a
 > `\UNVERIFIED{}` at that spot; conversely, if a `\UNVERIFIED` in the text is
 > there because a work was not obtained, that work must be listed here.

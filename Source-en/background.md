@@ -1,8 +1,8 @@
 # Knowledge diagnosis table
 
 > Phase 1 output. Used by Phase 2's depth decision and Phase 4's
-> do-not-re-explain judgement. The rules for filling it in are in `CLAUDE.md`
-> Phase 1 and in `PHASE1_PROBE_GUIDE.md`.
+> do-not-re-explain judgement. The rules for filling it in are in `CLAUDE.en.md`
+> Phase 1 and in `PHASE1_PROBE_GUIDE.en.md`.
 
 ## Baseline (assumed and not taught)
 
@@ -36,10 +36,10 @@ Date fixed / user's confirmation:
 
 ## Diagnosis results
 
-> The final depth is the value obtained by applying `CLAUDE.md` Phase 2's
+> The final depth is the value obtained by applying `CLAUDE.en.md` Phase 2's
 > "depth table" (usage x K grade).
 >
-> **Record the three K's separately.** `PHASE1_PROBE_GUIDE.md` §7 is
+> **Record the three K's separately.** `PHASE1_PROBE_GUIDE.en.md` §7 is
 > authoritative on the column layout. `direct` = the value from a probe
 > response or the user's self-assignment / `inferred` = the cap the edges
 > permit / `final` = the value Phases 2 and 4 actually use.
@@ -49,7 +49,7 @@ Date fixed / user's confirmation:
 >
 > In the grade columns write only the codes -- `direct`, `inferred` and
 > `final K` take `K0`-`K3`, `final depth` takes `L0`-`L4`, `usage` takes
-> `A`-`D`. A short qualifier (`K2 이상`, `baseline`) is fine (`CLAUDE.md`, "How
+> `A`-`D`. A short qualifier (`K2 or above`, `baseline`) is fine (`CLAUDE.en.md`, "How
 > to talk to the user"; `md-check.sh` item 8).
 
 ### Turn 1 results
@@ -65,11 +65,11 @@ Date fixed / user's confirmation:
 ### The remaining nodes, filled in without asking
 
 > Do not ask exhaustively. They are filled by two routes
-> (`PHASE1_PROBE_GUIDE.md` §3). On the edge "to understand A you need B", B is
+> (`PHASE1_PROBE_GUIDE.en.md` §3). On the edge "to understand A you need B", B is
 > A's **prerequisite** and A is B's **dependent**.
 >
 > **Positive inheritance** -- if a prerequisite is K2 or above, assume the nodes
-> depending on it are K2 and spot-check just one (`CLAUDE.md`, "Search
+> depending on it are K2 and spot-check just one (`CLAUDE.en.md`, "Search
 > strategy"). **Propagation of the cap** -- if a definition edge's prerequisite
 > is K1 or below, do not grade its immediate dependent K2 or above. **It travels
 > exactly one step** (it is not pushed two steps down). A proof edge constrains
@@ -86,7 +86,7 @@ Date fixed / user's confirmation:
 ### Nodes where direct evidence came out above the inferred cap
 
 > Common, and usually a sign not of a defect in the user but **that the graph is
-> wrong** (`PHASE1_PROBE_GUIDE.md` §4). Do not cut the direct evidence down;
+> wrong** (`PHASE1_PROBE_GUIDE.en.md` §4). Do not cut the direct evidence down;
 > record the cause as one of three -- black-box fluency / taken for a definition
 > edge but actually a proof edge / the probe measured something else.
 > If writing it thin feels unsafe, **raise the depth by one step**, not the K,
