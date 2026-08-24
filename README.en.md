@@ -132,8 +132,7 @@ rule in turn. A single non-ASCII character under `tex/` made the log binary,
 so an ordinary `grep` quietly found nothing and a failed build was reported as
 "0 warnings". Working notes left in a bibtex `note` field were printed across
 twelve pages of the final PDF's bibliography. A file added later sat outside a
-checker's glob and got a pass while full of `\cite`s -- widening the scope took
-the comparison count from 223 to 243.
+checker's glob and got a pass while full of `\cite`s.
 
 **None of this makes the model stop being wrong. It only keeps a wrong thing
 from staying quiet.**
@@ -159,7 +158,7 @@ this turn is still in the conversation now. The agent raises it too once the
 conversation has grown long, but **only the user holds the signal that this is
 the last turn.**
 
-Requirements: [Claude Code](https://claude.com/claude-code), TeX Live
+Requirements: [Claude Code](https://claude.com/claude-code) (or [Codex](https://openai.com/codex)), TeX Live
 (`latexmk`, `pdflatex`), `python3` (the markdown checker), and `poppler`
 (`pdftotext`, `pdftoppm`) for handling source PDFs.
 
@@ -168,8 +167,7 @@ Requirements: [Claude Code](https://claude.com/claude-code), TeX Live
 Per-project output -- paper PDFs, written textbooks, diagnosis results -- is
 not included. What is here is the method and empty templates.
 
-The management documents and the conversation are written in Korean; the
-textbook under `tex/` defaults to English. Both are per-project settings.
+The textbook under `tex/` defaults to English. This is a per-project setting.
 
 ## License
 

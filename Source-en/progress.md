@@ -131,8 +131,8 @@ inspect the log with an improvised `grep`. For the reason see `CLAUDE.en.md`'s
 verification rules (a single non-ASCII character makes `main.log` binary and
 silences `grep`).
 
-Rule: **everything under `tex/` is ASCII.** Korean notes live only in the
-management documents.
+Rule: **everything under `tex/` is ASCII.** Notes in user's language
+live only in the management documents.
 
 ## Chapter status
 

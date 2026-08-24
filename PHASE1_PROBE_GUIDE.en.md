@@ -200,8 +200,8 @@ performance rather than self-report, and decides the boundary it aims at.
 - An item that required several prerequisites at once.
 - A probe that demanded knowledge outside the budget.
 - A case where the mathematics cannot be judged because of English expression --
-  it is fine to ask for the explanation again in Korean. An English grammar
-  error is not itself a gap in knowledge.
+  it is fine to ask for the explanation again in user's language.
+  An English grammar error is not itself a gap in knowledge.
 
 ---
 

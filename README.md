@@ -118,8 +118,7 @@ L0은 제외, L1은 진술과 출처, L2는 논문에서의 역할까지, L3은 
 비ASCII 한 글자가 로그를 binary로 만들어 일반 `grep`이 조용히 아무것도 찾지
 못했고, 실패한 빌드가 「경고 0건」으로 보고되었다. bibtex의 `note` 필드에 적어
 둔 작업 메모가 최종 PDF의 참고문헌에 12쪽에 걸쳐 인쇄되었다. 나중에 추가한
-파일이 검사기의 glob 밖에 있어 `\cite`가 가득한 채로 통과 표시만 받았다 —
-범위를 넓히자 대조 건수가 223에서 243으로 늘었다.
+파일이 검사기의 glob 밖에 있어 `\cite`가 가득한 채로 통과 표시만 받았다.
 
 **이 장치들은 모델이 틀리지 않게 만들지 못한다. 틀린 것이 조용히 남지 않게
 만들 뿐이다.**
@@ -142,7 +141,7 @@ cp -R Source "내 논문 이름"
 바꿨는지가 아직 대화에 남아 있기 때문이다. 대화가 길어지면 에이전트도 먼저
 제안하지만, **「이번이 마지막 턴」이라는 신호는 사용자만 가지고 있다.**
 
-필요한 것: [Claude Code](https://claude.com/claude-code), TeX Live(`latexmk`,
+필요한 것: [Claude Code](https://claude.com/claude-code) (혹은 [Codex](https://openai.com/codex)), TeX Live(`latexmk`,
 `pdflatex`), `python3`(마크다운 검사기), 원문 PDF를 다루기 위한 `poppler`
 (`pdftotext`, `pdftoppm`).
 

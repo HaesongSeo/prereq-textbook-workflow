@@ -54,7 +54,7 @@ ask whether to close the session and continue in a new one.
 
 **Use it knowing the limit.** There is no way to measure the context that
 remains, so this judgement can miss. **That is why the note to the user above
-is still needed** -- either one catching it is enough.
+is still needed.**
 
 ---
 
@@ -68,7 +68,7 @@ Below are the definitions of the fields; no values are filled in here.
 |---|---|
 | `TARGET_PAPER` | Authors, title, publication data |
 | `SOURCE` | arXiv ID / DOI / local PDF path |
-| `OUTPUT_LANGUAGE` | Default **English**. Output under `tex/` is written in English and typeset with pdflatex. The management documents (spec/background/progress) and the conversation stay in Korean |
+| `OUTPUT_LANGUAGE` | Default **English**. Output under `tex/` is written in English and typeset with pdflatex. The management documents (spec/background/progress) and the conversation stay in user's language |
 | `TOTAL_PAGE_BUDGET` | **The cap on the sum of the preparatory chapters (Part I).** Phase 5's close-reading pages are not counted here (see Phase 2, "The length of Part II"). E.g. 140 pages |
 | `PER_CHAPTER_MAX` | The cap on a single chapter. **It applies both to preparatory chapters and to close-reading sections.** E.g. 15 pages |
 | `BASELINE_HINT` | The floor of assumed knowledge. Fixed by probes in Phase 1 |
@@ -190,7 +190,7 @@ a session a matter of reading values, not interpreting prose.
 phase: 4                       # 0-6
 phase_status: in_progress      # in_progress | awaiting_approval | done
 last_approved: "2026-08-15 Ch07"
-next_action: "Ch08 (V01-V07) 집필"
+next_action: "Write Ch08 (V01-V07)"
 chapters_approved: [01, 02, 03, 04, 05, 06, 07]
 sections_approved: []          # Phase 5's paper/secNN
 ---
@@ -361,7 +361,7 @@ presumes.
   - Good: "Which hypothesis is missing from the following theorem: ..." /
     "Compute $H^1$ in this example." / "Why is this statement false?"
 - Probes and other mathematical questions are issued in English. The commentary
-  and the grading explanation stay in Korean.
+  and the grading explanation stay in user's language.
 - **Formulas in the chat are not typeset.** Raw $\LaTeX$ in a probe does not
   read, so once a formula runs past two lines or the subscripts pile up, write
   it out in plain symbols (`H^1(X, N) -> H^1(X, Omega)`). If that still fails,
