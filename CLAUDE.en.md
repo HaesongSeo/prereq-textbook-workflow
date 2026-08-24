@@ -10,6 +10,54 @@ work is unrecoverable). If there is nothing to record, say so and move on.
 
 ---
 
+## Before ending a session
+
+### A note to the user
+
+> **This subsection alone is addressed to the user.** Everything else is a rule
+> the agent follows.
+
+**Ask for a sweep of the management documents before you close the session.**
+
+Even with the rule that the three files are updated at the end of every turn,
+one or two omissions survive -- an approval column, the state block's
+`next_action`, an item that should have been struck from "Open". Each is minor
+where it happens, but **the next session starts by believing that stale value
+is a fact.**
+
+**Two reasons it belongs at the end rather than the start.**
+
+- Right now what changed this turn is still in the conversation. The next
+  session begins without that, seeing only what the files say.
+- **The agent does not know when the session is about to end.** There is a rule
+  to confirm "nothing to record" at the end of every turn, but only the user
+  holds the signal that this is the last one.
+
+On request, every checker is run in order and **what no checker sees** is
+looked at too -- is `next_action` really the next action, is there an item in
+"Open" that is already done, does the last row of the approval log agree with
+`last_approved`.
+
+### When the agent raises it first
+
+Leaving the signal entirely with the user makes it easy to miss. **When the
+conversation has clearly grown long, raise it first** -- propose the sweep, and
+ask whether to close the session and continue in a new one.
+
+- The signal is circumstantial, not a number. Many turns have accumulated,
+  large files have been read several times, the early part has already been
+  replaced by a summary -- that is the moment.
+- **Propose only; the user decides.** Do not close the session; it cannot be
+  closed from here. If the user says to continue, continue.
+- When proposing, **say what is currently un-updated.** "It has got long, let
+  us stop" gives the user nothing to decide on.
+
+**Use it knowing the limit.** There is no way to measure the context that
+remains, so this judgement can miss. **That is why the note to the user above
+is still needed** -- either one catching it is enough.
+
+---
+
 ## 0. Project Config
 
 **This file sits at the `Study/` root and is shared by every project.** The

@@ -151,6 +151,14 @@ every project; per-project settings go at the top of that project's `spec.md`.
 For the first prompt, use the example under "Starting a new session" in
 `Source-en/progress.md`.
 
+**Ask for a sweep of the management documents before closing a session.** Even
+with the rule that they are updated at the end of every turn, one or two
+omissions survive, and **the next session starts by believing that stale value
+is a fact.** It belongs at the end rather than the start because what changed
+this turn is still in the conversation now. The agent raises it too once the
+conversation has grown long, but **only the user holds the signal that this is
+the last turn.**
+
 Requirements: [Claude Code](https://claude.com/claude-code), TeX Live
 (`latexmk`, `pdflatex`), `python3` (the markdown checker), and `poppler`
 (`pdftotext`, `pdftoppm`) for handling source PDFs.
