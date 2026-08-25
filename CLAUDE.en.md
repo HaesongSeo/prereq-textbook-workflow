@@ -226,6 +226,7 @@ Study/
     background.md    # knowledge diagnosis table (Phase 1 output)
     progress.md      # current stage / approval log / measured length / session history
     md-check.sh      # checker for the management documents
+    probes/          # the Phase 1 probes. turnN.tex + turnN.pdf (created in Phase 1)
     refs/
       NOTES.md       # authority on what has been obtained + how to read each PDF
       *.pdf          # the sources obtained
@@ -362,10 +363,21 @@ presumes.
     "Compute $H^1$ in this example." / "Why is this statement false?"
 - Probes and other mathematical questions are issued in English. The commentary
   and the grading explanation stay in user's language.
-- **Formulas in the chat are not typeset.** Raw $\LaTeX$ in a probe does not
-  read, so once a formula runs past two lines or the subscripts pile up, write
-  it out in plain symbols (`H^1(X, N) -> H^1(X, Omega)`). If that still fails,
-  typeset it as `.tex` and hand over a PDF.
+- **Typeset the probes and hand over a PDF. Do not write formulas in the chat.**
+  The chat does not typeset formulas, so once lines like
+  `H^1(X, N) -> H^1(X, Omega)` pile up the user cannot make out the question.
+  Then **the answer measures legibility rather than knowledge, and it cannot be
+  used as evidence for a grade** (`PHASE1_PROBE_GUIDE.en.md` §6, "a
+  misunderstanding caused by a difference in notation"). Make no exception
+  unless the check fits on one line.
+- **Put the file at `<project>/probes/turnN.tex` and build it there.** Do not
+  create it in the scratchpad and hand it over from there -- a file outside the
+  project folder disappears when the session ends, and then **there is no way to
+  check what the grades in `background.md` were based on.** For the same reason,
+  **do not delete them when Phase 1 ends.** Those files are the evidence for the
+  K grades. Typeset with xelatex when the commentary is not in English
+  (`fontspec` + the relevant language package). After building, render one page
+  to PNG and look at it -- a missing font breaks quietly.
 - Every probe must be answerable in five lines or fewer.
 - **Do not put the grade names in the item.** Write in plain language what the
   answer changes in the textbook (see "How to talk to the user",
@@ -998,6 +1010,8 @@ everything:
 - **Changing the plan without approval**
 - Asking the user a question, or requesting approval, in grade codes alone (see
   "How to talk to the user")
+- Writing a probe as formulas in the chat, or creating it outside the project
+  folder and handing it over from there (see Phase 1, "Rules for questions")
 - Conversely, spelling out a management document's grade column in prose (same
   section, `md-check.sh` item 8)
 - Leaving a resolved item in an "Open" list. Delete it from the open list as
