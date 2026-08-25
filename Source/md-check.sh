@@ -154,8 +154,8 @@ for f in MD:
     # like the target paper's own "Rmk 12.14" and be checked by nothing -- a
     # whole class of references escaped this check that way.  Unwrap the prefix
     # BEFORE stripping code spans.
-    body = strip_code(re.sub(r'`(Ch\d\d|P\d[ab]?)`', r'\1', txt))
-    for m in re.finditer(r'(?:`?Ch(\d\d)`?|`?P\d[ab]?`?)\s+(' + '|'.join(KIND_EN) +
+    body = strip_code(re.sub(r'`(Ch\d\d|P\d[a-z]?)`', r'\1', txt))
+    for m in re.finditer(r'(?:`?Ch(\d\d)`?|`?P\d[a-z]?`?)\s+(' + '|'.join(KIND_EN) +
                          r')\.?~?\s*([0-9]+)\.([0-9]+)(?![0-9])(?!\.[0-9])',
                          body):
         ch, kind, maj, minr = m.group(1), m.group(2), m.group(3), m.group(4)
@@ -442,13 +442,13 @@ if os.path.exists(_prog):
     for _l in _txt.split('\n'):
         _c = [x.strip() for x in _l.strip().strip('|').split('|')] \
              if _l.lstrip().startswith('|') else []
-        _m3 = _re.match(r'`?paper/sec(\d{2}[ab]?)', _c[1]) if len(_c) >= 4 else None
+        _m3 = _re.match(r'`?paper/sec(\d{2}[a-z]?)', _c[1]) if len(_c) >= 4 else None
         if _m3 and _approved(_c[3]):
             _sticked.add(_m3.group(1))
-        _m4 = _re.search(r'\*\*`?sec(\d{2}[ab]?)`?\*\*', _l)
+        _m4 = _re.search(r'\*\*`?sec(\d{2}[a-z]?)`?\*\*', _l)
         if _m4 and _APPROVED_CELL(_l):
             _slogged.add(_m4.group(1))
-        _m5 = _re.search(r'\*\*`?P(\d{1,2})([ab]?)`?\*\*', _l)
+        _m5 = _re.search(r'\*\*`?P(\d{1,2})([a-z]?)`?\*\*', _l)
         if _m5 and _APPROVED_CELL(_l):
             _slogged.add(f'{int(_m5.group(1)):02d}{_m5.group(2)}')
     for _s in sorted(_sticked - _slogged):
@@ -486,7 +486,7 @@ if os.path.exists(_prog):
                     f'state block says phase {_ph}, but the "current phase" '
                     f'line does not mention it')
         _fmch = set(_re.findall(r'\d{2}', _fm.get('chapters_approved', '')))
-        _fmsec = set(_re.findall(r'\d{2}[ab]?', _fm.get('sections_approved', '')))
+        _fmsec = set(_re.findall(r'\d{2}[a-z]?', _fm.get('sections_approved', '')))
         for _ch in sorted(_fmch - _logged):
             bad('state', _prog,
                 f'Ch{_ch} is in chapters_approved but not in the approval log')
