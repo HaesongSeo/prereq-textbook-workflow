@@ -1,4 +1,4 @@
-한국어 | [English](README.en.md)
+<p align="right">한국어 | <a href="README.en.md">English</a> · <a href="https://sites.google.com/view/haesongseo/home">홈페이지</a></p>
 
 # prereq-textbook-workflow
 

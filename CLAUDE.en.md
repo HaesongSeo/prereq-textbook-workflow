@@ -543,6 +543,14 @@ the paper has already written.**
   name").
 - The target goes in `spec.md` under "Phase 5 (close reading): order and
   length"; the measurement goes in `progress.md` under "Close-reading status".
+- **In the same turn the reading plan is written, create one row per section in
+  `progress.md` under "Close-reading status"** -- in reading order, with the §
+  number and the file name (`paper/secNN-<slug>.tex`) filled in, the length
+  left blank and the status ☐. Do not copy the target page count (its authority
+  is `spec.md`). If the rows wait until Phase 5, the sessions in between can see
+  the reading scope only in `spec.md`, and with the table empty a section that
+  is not in the plan slips in unnoticed. When a section is split (`sec05a` /
+  `sec05b`), split its row then.
 
 #### Target and measurement miss in one direction
 
@@ -576,6 +584,8 @@ commonly comes in below it.
       was made (before writing)
 - [ ] Every section in the close-reading scope has **the source page count as
       its target** (`spec.md`, "Phase 5: order and length")
+- [ ] `progress.md`, "Close-reading status" has **a row for every section in
+      the close-reading scope, in reading order** (status ☐, length blank)
 
 ---
 

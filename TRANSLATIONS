@@ -7,8 +7,8 @@
 # 루트의 정책 파일은 `<이름>.en.md`, 템플릿은 `Source-en/` 아래에 같은 이름으로
 # 둔다. 한국어판이 바뀌면 검사가 실패한다 — 영어판을 맞춘 뒤 해시를 갱신한다.
 
-README.en.md | README.md | 413867081a7493efa2ad46598201885b8f5587c46785f1276c3f6e9c55ce2c8e | 2026-08-24
-CLAUDE.en.md | CLAUDE.md | 3e7cda71336d1b34e4a13998473fa6f55e71bb8f64b30cedf177589a2128d54b | 2026-08-25
+README.en.md | README.md | 9b597f0032f01d44b44792834d3bffe22e5e58424cf87627036b91907114f173 | 2026-09-11
+CLAUDE.en.md | CLAUDE.md | dfc2e80731e0e974a9c7c5577cbe6d31aa8878a986177fb83b2632ed9c246845 | 2026-09-12
 PHASE1_PROBE_GUIDE.en.md | PHASE1_PROBE_GUIDE.md | 095626c88e009ee479ff1c2eca836204e7e23d99ebf4f380538cc2919b90620d | 2026-08-20
 Source-en/spec.md | Source/spec.md | 5240667cd7cef686035638a3cff0cffd35b8855e8a4332fc98f47bb6de1c30da | 2026-08-20
 Source-en/background.md | Source/background.md | f476bc76583a629c8da7d8e7cc220ade87bd52e33b83c3780142c63223b68008 | 2026-08-20
