@@ -25,6 +25,7 @@ written here were put up at the spot where something failed.
 |---|---|
 | `CLAUDE.en.md` | Project policy. The Phase 0-6 procedure, the depth-decision rule, the verification rules, the prohibitions |
 | `PHASE1_PROBE_GUIDE.en.md` | The detail policy for background diagnosis (Phase 1): which node to ask about, how to turn an answer into a grade, how to fill in the nodes never asked about |
+| `PHASE45_WRITING_GUIDE.en.md` | The writing rules for the textbook (Phase 4) and the close reading (Phase 5): where symbols are defined and when they are recalled, contrastive phrasing, how sources are written, how much detail proofs and computations get, and the checklist before a chapter is final |
 | `Source/` | The template copied wholesale to start a new project |
 | `Source-en/` | The same template in English. Copy this one to work in English |
 
@@ -38,7 +39,7 @@ state -- the policy files never record progress.
 |---|---|---|
 | 0 | Obtain and analyse the paper | Dependency graph, notation glossary, chapter outline (`spec.md`) |
 | 1 | Background diagnosis | A knowledge grade per node (`background.md`) |
-| 2 | Curriculum design | Depth and page budget per chapter |
+| 2 | Curriculum design | Depth and page target per chapter (a reference value) |
 | 3 | Obtain the references | `refs/`, `refs.bib` |
 | 4 | Write the textbook | `tex/chapters/` |
 | 5 | Read the paper closely | `tex/paper/` |
@@ -119,6 +120,7 @@ meaning written nowhere tells the reader nothing.
 | `tex/check.sh` | Non-ASCII scan, then clean-room build, then log inspection with `grep -a`, then items missing from a chapter's closing summary table |
 | `md-check.sh` | Undefined macros in the management documents, vertical bars that break tables, column counts, our own item numbers against the real numbers in `.aux`, disagreement between the approval table, the approval log and the state block, grade columns that lost their codes and became prose, and copied tables that have drifted apart |
 | `tex/notation-check.sh` | Places where a notation macro's expansion was typed by hand, so the notation has forked |
+| `tex/style-check.sh` | Traces of broken writing rules -- contrastive phrases, skipped steps such as "clearly", a notation paragraph at the head of a chapter and forward references. **It only warns and never fails** |
 | `tex/import-check.sh` | Whether a chapter forked from another project has drifted -- in either direction (it fails rather than merging) |
 | `tex/<paper>-check.sh` | Source theorem numbers written as plain text. Something like `Thm.~8.1` never goes through `\ref`, so the build checks nothing about it |
 | `translation-check.sh` | English editions whose Korean source has moved since, and scripts in `Source/` and `Source-en/` that were fixed on one side only |

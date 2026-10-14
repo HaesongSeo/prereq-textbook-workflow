@@ -46,7 +46,8 @@ import re, glob, sys, os
 # dozens of references to our own numbered items and to source item numbers,
 # and it once sat outside this glob for weeks.  Keep the recursive form when
 # .md files appear in a new directory.
-MD    = ['../CLAUDE.md', '../PHASE1_PROBE_GUIDE.md', '../README.md'] \
+MD    = ['../CLAUDE.md', '../PHASE1_PROBE_GUIDE.md', '../PHASE45_WRITING_GUIDE.md',
+         '../README.md'] \
         + sorted(glob.glob('**/*.md', recursive=True))
 AUX   = sorted(f for f in glob.glob('tex/**/*.aux', recursive=True)
                  if os.path.basename(f) != 'main.aux')

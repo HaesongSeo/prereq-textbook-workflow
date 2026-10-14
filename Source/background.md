@@ -7,6 +7,12 @@
 
 아래 항목은 probe 대상이 아니며, 교재에서 설명하지 않고 인용만 한다.
 
+**기준 문헌** (`spec.md` Config의 `STANDARD_REFERENCES`): 이 문헌에 진술된 사실은
+baseline에 포함된다. baseline을 제안할 때 사용자에게 이 점을 명시하고 함께
+확인받는다 (`CLAUDE.md` Phase 1 「Baseline 확정」).
+
+- [ ] 기준 문헌:
+
 ### A. (묶음 이름)
 
 - [ ] A1.

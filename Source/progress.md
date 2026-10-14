@@ -24,11 +24,15 @@ sections_approved: []
    확인하는 것까지가 절차다.)
    Phase 1을 진행 중이면 `Study/` 루트의 `PHASE1_PROBE_GUIDE.md`도 읽는다.
    probe 선정과 K등급 판정은 그 파일이 정본이다.
+   Phase 4·5를 진행 중이면 `Study/` 루트의 `PHASE45_WRITING_GUIDE.md`도 읽는다.
+   서술 규칙(기호, 대비 서술, 출처, 자세히 쓰기)은 그 파일이 정본이다.
 3. 검사를 **이 순서로** 돌린다 (아래 「검사 스크립트」 참조).
    `sh tex/check.sh` → `sh md-check.sh` → `sh tex/notation-check.sh` →
-   `sh tex/import-check.sh`(가져온 장이 있을 때) → (프로젝트별 원문 번호 대조기)
-   `md-check.sh`가 `.aux`를 읽으므로 빌드가 먼저다. 뒤의 셋은
-   Phase 4·5·6의 종료 조건이 통과를 요구한다.
+   `sh tex/style-check.sh`(경고만) → `sh tex/import-check.sh`(가져온 장이 있을 때) →
+   (프로젝트별 원문 번호 대조기)
+   `md-check.sh`가 `.aux`를 읽으므로 빌드가 먼저다. 표기·가져온 장·원문 번호
+   검사는 Phase 4·5·6의 종료 조건이 통과를 요구하고, `style-check.sh`의 경고는
+   전부 읽고 처리했어야 한다.
 4. 아래 「현재 상태」의 *다음 작업*부터 이어간다.
 
 첫 프롬프트 예시:
@@ -74,6 +78,7 @@ sections_approved: []
 | `sh tex/check.sh` | `tex/` | ① 비ASCII ② clean-room 빌드 ③ 로그(`grep -a`) ④ 장 끝 「Summary」 표에 빠진 항목 |
 | `sh md-check.sh` | 루트의 공유 정책 파일 + **프로젝트 아래 모든 `.md`** (`refs/NOTES.md` 포함) | ① 백틱 밖 프로젝트 매크로 ② 표 안 수식의 세로줄 ③ 표 열 개수 ④ 한 줄에서 안 닫힌 인라인 수식 ⑤ 우리 항목 번호를 `tex/**/*.aux`와 대조 (한국어 「`chNN` 비고 N.N」과 영어 약식 「`ChNN` Rmk N.N」 두 형태 모두) ⑥ `\uXXXX` 이스케이프 누출 ⑦ 「챕터 진행 현황」·「논문 정독 현황」의 승인 열 ↔ 승인 로그 ⑧ 등급 열(`사용 방식`·`직접`·`추정`·`확정 K`·`깊이`)이 기호를 잃고 평문으로 풀어 쓰였는가 ⑨ 상태 블록 ↔ 승인 로그 ⑩ `SSOT-COPY` 표 ↔ 정본 |
 | `sh tex/notation-check.sh` | **`tex/` 아래 모든 `.tex`** (머리말·부록 포함) | `notation.sty` 매크로의 전개형을 손으로 쓴 곳 |
+| `sh tex/style-check.sh` | **`tex/` 아래 모든 `.tex`** (장 템플릿 `ch00`·`sec00`과 `tex/backup/` 제외) | **경고만 하고 실패하지 않는다.** ① 대비 표현 ② 단계를 건너뛰는 표현 ③ 장 첫머리의 기호 문단과 전방 참조 ④ 「throughout the book」 선언의 목록 ⑤ 검산 표시 안의 완결성 주장. 규칙은 `PHASE45_WRITING_GUIDE.md` |
 | `sh tex/import-check.sh` | `tex/IMPORTS` | 다른 프로젝트에서 가져온 장의 **원본이 바뀌었는가** |
 
 **프로젝트별로 하나 더 만든다: 원문 정리 번호 대조기.** 본문이 텍스트로 적은
@@ -88,6 +93,9 @@ sections_approved: []
 - `\cite[...]{...}`는 **키가 목표 논문일 때만** 판정한다.
 - 산문을 훑기 전에 **모든 `\cite[...]{...}`를 지운다.** 안 지우면 다른 문헌의
   위치 지시가 본문처럼 읽힌다.
+- 인용을 감싸는 약칭 매크로를 `notation.sty`에 만들었으면 **그것도 같이
+  지운다.** 새로 만들 때마다 대조기에 더한다 — 빠뜨리면 그 매크로 안의 다른
+  문헌 번호가 목표 논문의 번호로 읽힌다.
 
 ## 빌드 검증 규칙
 

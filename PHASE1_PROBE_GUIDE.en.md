@@ -236,7 +236,9 @@ per node.
 
 Phase 1 ends when the following hold. **Grading every node is not the goal.**
 
-- The baseline is fixed.
+- The baseline is fixed. The user has been told explicitly that the standard
+  references (Config `STANDARD_REFERENCES`) are part of the baseline, and has
+  confirmed it (`CLAUDE.en.md` Phase 1, "Fixing the baseline").
 - The K boundaries the curriculum hangs on have been checked.
 - The key C/D nodes have direct evidence.
 - The rest are filled by graph inference or a conservative default, and that

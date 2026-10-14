@@ -69,9 +69,10 @@ Below are the definitions of the fields; no values are filled in here.
 | `TARGET_PAPER` | Authors, title, publication data |
 | `SOURCE` | arXiv ID / DOI / local PDF path |
 | `OUTPUT_LANGUAGE` | Default **English**. Output under `tex/` is written in English and typeset with pdflatex. The management documents (spec/background/progress) and the conversation stay in user's language |
-| `TOTAL_PAGE_BUDGET` | **The cap on the sum of the preparatory chapters (Part I).** Phase 5's close-reading pages are not counted here (see Phase 2, "The length of Part II"). E.g. 140 pages |
-| `PER_CHAPTER_MAX` | The cap on a single chapter. **It applies both to preparatory chapters and to close-reading sections.** E.g. 15 pages |
+| `TOTAL_PAGE_BUDGET` | **A reference length for the sum of the preparatory chapters (Part I).** If it is exceeded, only record it in `progress.md` (`PHASE45_WRITING_GUIDE.en.md` §5). Phase 5's close-reading pages are not counted here (see Phase 2, "The length of Part II"). E.g. 140 pages |
+| `PER_CHAPTER_MAX` | **A reference length for a single chapter.** Used for preparatory chapters and close-reading chapters alike. If it is exceeded, only record it; never split a chapter because of length (`PHASE45_WRITING_GUIDE.en.md` §5). E.g. 15 pages |
 | `BASELINE_HINT` | The floor of assumed knowledge. Fixed by probes in Phase 1 |
+| `STANDARD_REFERENCES` | **The standard references for standard facts.** Default: Hartshorne, *Algebraic Geometry*. Facts stated in them belong to the baseline (Phase 1, "Fixing the baseline"), and the book names them in the conventions section of its first chapter. Facts outside them are not treated as standard (`PHASE45_WRITING_GUIDE.en.md` §4) |
 
 If the config in that project's `spec.md` is empty, **do not start Phase 0 --
 ask first.**
@@ -97,7 +98,8 @@ understand the target paper.
 **The grade codes are our working apparatus, not the user's.** `K0`-`K3`,
 `L0`-`L4`, the usage tags `A`-`D`, the edge kinds (definition/proof), node IDs
 (`N01`) and baseline item numbers all have meaning only inside this file,
-`PHASE1_PROBE_GUIDE.en.md`, and the management documents. The user does not have
+`PHASE1_PROBE_GUIDE.en.md`, `PHASE45_WRITING_GUIDE.en.md`, and the management
+documents. The user does not have
 those files open while talking. So holding out a bare code in the chat conveys
 nothing.
 
@@ -213,9 +215,11 @@ sections_approved: []          # Phase 5's paper/secNN
 Study/
   CLAUDE.md          # policy (Korean), near-immutable, shared by all projects
   PHASE1_PROBE_GUIDE.md  # Phase 1 detail policy (probe selection / K grading). Shared
+  PHASE45_WRITING_GUIDE.md  # Phase 4-5 writing rules (notation, contrast, sources, detail). Shared
   README.md
-  CLAUDE.en.md           # this file: the English edition of the three above
+  CLAUDE.en.md           # this file: the English edition of the four above
   PHASE1_PROBE_GUIDE.en.md
+  PHASE45_WRITING_GUIDE.en.md
   README.en.md
   TRANSLATIONS           # which revision of the Korean each English file renders
   translation-check.sh   # checks whether the Korean moved and left the English stale
@@ -234,6 +238,7 @@ Study/
       .latexmkrc
       check.sh       # non-ASCII scan + clean-room build + log inspection
       notation-check.sh
+      style-check.sh   # warns about traces of broken writing rules (PHASE45_WRITING_GUIDE.en.md)
       import-check.sh  # drift detection for chapters forked from another project
       IMPORTS          # their origins and the hashes at the point of forking
       IMPORT-HEADER.txt # the form of the provenance block put at the top of a forked file
@@ -411,6 +416,9 @@ reads in exactly opposite ways.
   and not taught"** and get the user's confirmation.
 - Items below the baseline are **neither probed nor written about.** They are
   only cited.
+- **The baseline includes the Config's `STANDARD_REFERENCES`** -- facts stated
+  in those references are baseline. When proposing the baseline, tell the user
+  this explicitly, name the references, and get it confirmed together.
 - The baseline is recorded at the top of `background.md`.
 
 ### Output -- `background.md`
@@ -471,10 +479,13 @@ repeated here.
 
 ### The page budget
 
-- Record a target page count per chapter in `spec.md`. The sum **for the
-  preparatory chapters** does not exceed `TOTAL_PAGE_BUDGET`.
-- If the budget looks likely to be exceeded, report it before writing and
-  propose which item's depth to lower.
+- Record a target page count per chapter in `spec.md`, and record the sum **for
+  the preparatory chapters** next to `TOTAL_PAGE_BUDGET`.
+- **The budget and the per-chapter length are reference values.** If the
+  planned sum exceeds the budget, the depths stay as the table gives them -- the
+  targets are recorded in `spec.md` and go out with the Phase 2 summary. If it
+  is exceeded while writing, only the measurement is recorded
+  (`PHASE45_WRITING_GUIDE.en.md` §5).
 - **`TOTAL_PAGE_BUDGET` covers only the preparatory chapters (Part I).**
   Phase 5's close-reading pages are not subject to a budget (see "The length of
   Part II" below).
@@ -537,10 +548,10 @@ the paper has already written.**
 - The measured value departs from the target, and that is normal. A section the
   preparatory chapters have already prepared for gets shorter; a section the
   paper wrote compactly gets longer.
-- Even if a source section exceeds `PER_CHAPTER_MAX`, do not split it in
-  advance in Phase 2. Where to split only becomes visible on reading it. Decide
-  then and split into `sec05a` / `sec05b` (Phase 5, "The number in the file
-  name").
+- Do not split a source section in advance in Phase 2. A split is made where
+  the discussion really divides, and that only becomes visible on reading it.
+  Decide then and split into `sec05a` / `sec05b` (Phase 5, "The number in the
+  file name"). Length alone is never a reason to split.
 - The target goes in `spec.md` under "Phase 5 (close reading): order and
   length"; the measurement goes in `progress.md` under "Close-reading status".
 - **In the same turn the reading plan is written, create one row per section in
@@ -567,7 +578,9 @@ Part II is like that because the reason it exists is to unfold what the source
 compressed -- **coming out the same length as the source means it was
 transcribed, not read.** In Part I, a chapter whose target slightly exceeds
 `PER_CHAPTER_MAX` is not by itself a reason to change the plan; the measurement
-commonly comes in below it.
+commonly comes in below it. Conversely, if following the rule on writing in
+detail (`PHASE45_WRITING_GUIDE.en.md` §5) takes the measurement above the target,
+only record it.
 
 ### Exit conditions
 
@@ -577,11 +590,9 @@ commonly comes in below it.
       **with its reason**
 - [ ] The per-chapter page targets were set **by counting items** (not
       estimated from K grades)
-- [ ] The sum of the **preparatory chapters'** targets is within
-      `TOTAL_PAGE_BUDGET`
-- [ ] Each chapter is within `PER_CHAPTER_MAX`
-- [ ] If the budget was exceeded, **a proposal for which item's depth to lower**
-      was made (before writing)
+- [ ] The sum of the **preparatory chapters'** targets is recorded next to
+      `TOTAL_PAGE_BUDGET` (a reference value; exceeding it does not lower any
+      depth)
 - [ ] Every section in the close-reading scope has **the source page count as
       its target** (`spec.md`, "Phase 5: order and length")
 - [ ] `progress.md`, "Close-reading status" has **a row for every section in
@@ -653,17 +664,12 @@ because only the statement is quoted").
 
 ### Writing principles
 
-- The register of graduate lecture notes.
-- Motivation -> intuition -> example -> why it is needed. **But only within
-  what the depth grade permits.**
-  - L1: one or two sentences of motivation. No example.
-  - L2: motivation + the role in the paper. At most one example.
-  - L3: examples and computations included.
-  - L4: proof included.
-- Avoid needless abstraction and textbook-style completeness.
-- **The notation follows the target paper.** Reading the paper outranks the
-  textbook's convenience. Where it differs from standard notation, give the
-  correspondence in a footnote.
+**The authority for the writing rules is `PHASE45_WRITING_GUIDE.en.md`. Read it
+when Phase 4 starts.** The register and how far each depth grade goes, how
+notation is defined, fixed and recalled (including the principle that the
+notation follows the target paper), contrastive phrasing, how sources are
+written, the density of proofs and computations, and the checklist before a
+chapter is final are all there. They are not repeated here.
 
 ### Checks before a chapter is final
 
@@ -671,19 +677,24 @@ because only the statement is quoted").
    Or explicitly justified as "intuition the reader needs"? If neither, delete
    it.
 2. Is anything graded K2 or above in `background.md` being re-explained?
-3. Is the length within `PER_CHAPTER_MAX`?
+3. Is the length measured and entered in `progress.md`, "Measured length"?
+   (`PER_CHAPTER_MAX` is a reference value. Exceeding it is not reported)
 4. Does `latexmk -pdf` pass without warnings?
 5. Does every theorem carry a source? (see the verification rules)
+6. Has the checklist in `PHASE45_WRITING_GUIDE.en.md` §7 been run? Have all
+   warnings of `sh tex/style-check.sh` been read?
 
 ### Phase exit conditions
 
-The five above are run **per chapter**. Closing the phase is separate.
+The six above are run **per chapter**. Closing the phase is separate.
 
 - [ ] **Every chapter of the plan in `spec.md` is approved**, and the approval
       log, the status table and the front matter agree
-- [ ] The **measured** total length is within budget (`progress.md`,
-      "Measured length", is authoritative)
+- [ ] The **measured** length is in `progress.md`, "Measured length" (the
+      authority; the budget is a reference value)
 - [ ] `sh tex/check.sh` and `sh tex/notation-check.sh` pass
+- [ ] Every warning of `sh tex/style-check.sh` has been read and dealt with (the
+      check never fails)
 - [ ] If any chapter was imported, it is registered in `tex/IMPORTS` and
       `sh tex/import-check.sh` passes
 - [ ] No chapter outside the plan was written (if one was, it is approved as an
@@ -705,28 +716,11 @@ Proceeds section by section. For each section:
 Hidden assumptions and omitted proofs are not handled in advance; they are
 handled on arriving at the section.
 
-### Writing principle -- proofs in `proof`, remarks in remarks
+### Writing principles
 
-The paper's proofs are moved into a `proof` environment. They are not
-reconstructed inside a `remark`. An argument we restored because the paper did
-not have it also goes in a `proof` environment, with `\OWNPROOF` attached --
-what distinguishes the paper's from ours is the mark, not the environment.
-
-`remark` is used for three things only.
-
-- Connections and background the source omitted
-- Traps in the notation or the hypotheses; distinguishing two statements that
-  are easy to confuse
-- What is unresolved or uncertain
-
-Wrapping an argument in a `remark` breaks two things.
-
-- **The reader cannot tell the paper's argument from our commentary.** A remark
-  reads as an aside, so a proof inside one looks like something the paper did
-  not actually do.
-- The place for `\OWNPROOF` and `\OWNCHECK` disappears. Both marks attach to a
-  proof, and once the proof moves inside a remark there is no point at which to
-  mark what is ours.
+`PHASE45_WRITING_GUIDE.en.md` applies to close-reading chapters as it stands. The
+rule specific to close reading -- proofs in `proof`, remarks in remarks -- is §6
+of that file.
 
 ### The number in the file name is the paper's section number
 
@@ -735,8 +729,9 @@ reading order is fixed by the `\include` order in `main.tex` and by `spec.md`.
 
 Since the close-reading order differing from the paper's order is normal
 (`spec.md`, "Phase 5 (close reading): order and length"), numbering the files
-by reading order is a possible convention too. If a section runs long enough to
-reach `PER_CHAPTER_MAX`, split it into `secNNa` / `secNNb`. Do not create a
+by reading order is a possible convention too. If the discussion within a
+section really divides in two, split it into `secNNa` / `secNNb`. Length alone
+is never a reason (`PER_CHAPTER_MAX` is a reference value). Do not create a
 section that is not in the paper (a toolbox we assembled, say).
 
 ### Exit conditions
@@ -748,6 +743,7 @@ section that is not in the paper (a toolbox we assembled, say).
       carry `\OWNCHECK`
 - [ ] The **source theorem-number checker** (`tex/<paper>-check.sh`) exists and
       passes -- the build checks nothing about numbers written as plain text
+- [ ] Every warning of `sh tex/style-check.sh` has been read and dealt with
 - [ ] Remaining open items are recorded in `progress.md`, "Close-reading status"
 
 ---
@@ -852,6 +848,9 @@ every other rule.
   `[Har77, Thm.~III.5.2]`. A citation giving only author and year will not do.
 - Do not generate a paper, a theorem number, or a page that does not exist. If
   unsure, search or mark it.
+- The procedure for replacing a source that could not be consulted by an
+  equivalent one, the standard references, and the detailed form of citations
+  are set by `PHASE45_WRITING_GUIDE.en.md` §4.
 - **First establish which work a citation key renders to.** Where the same
   author has several papers, do not identify a source by author name alone:
   confirm the alpha-label-to-work correspondence in the bibliography of the
@@ -1009,6 +1008,15 @@ everything:
 - Writing a chapter that is not in `spec.md`
 - **Stating a theorem without a source**
 - **Inventing a reference or a theorem number**
+- Using a symbol before it is defined, using another chapter's or another
+  section's symbol without recalling it, fixing for the whole book a symbol that
+  does not qualify, defining symbols in a block at the head of a chapter or of
+  the book (`PHASE45_WRITING_GUIDE.en.md` §2)
+- Contrastive phrasing that is not mathematically needed (same file, §3)
+- Letting "standard" or "well known" stand in for a citation; putting a refuted
+  statement in a theorem environment (same file, §4)
+- Skipping a step of a proof or computation with words like "clearly" (same
+  file, §5)
 - Recording state in this file (`CLAUDE.en.md`). The Project Config also goes in
   each project's `spec.md` (§0)
 - Writing a length in two places. `progress.md`'s "Measured length" is the only

@@ -89,11 +89,12 @@ else
     # exact match. Anything else -- a fix applied to one template only -- fails.
     #
     # A consequence worth knowing: a shared file must not name CLAUDE.en.md
-    # (or the other two) even when both copies name it identically, because
+    # (or the other three) even when both copies name it identically, because
     # only the English copy gets rewritten and the two then differ. Refer to
     # the policy file without its language suffix instead.
     if ! sed -e 's/CLAUDE\.en\.md/CLAUDE.md/g' \
              -e 's/PHASE1_PROBE_GUIDE\.en\.md/PHASE1_PROBE_GUIDE.md/g' \
+             -e 's/PHASE45_WRITING_GUIDE\.en\.md/PHASE45_WRITING_GUIDE.md/g' \
              -e 's/README\.en\.md/README.md/g' "$EN/$f" \
          | diff -q - "$KO/$f" >/dev/null 2>&1; then
       echo "  DIVERGED       ${f#./}"

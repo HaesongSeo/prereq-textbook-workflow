@@ -21,6 +21,7 @@ OUTPUT_LANGUAGE:   English
 TOTAL_PAGE_BUDGET:
 PER_CHAPTER_MAX:
 BASELINE_HINT:
+STANDARD_REFERENCES:   Hartshorne, Algebraic Geometry
 ```
 
 ### Companion paper

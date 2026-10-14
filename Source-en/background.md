@@ -9,6 +9,13 @@
 The items below are not probed, and the textbook does not explain them -- it
 only cites them.
 
+**Standard references** (`STANDARD_REFERENCES` in the Config of `spec.md`): the
+facts stated in them belong to the baseline. When proposing the baseline, tell
+the user this explicitly and get it confirmed together (`CLAUDE.en.md` Phase 1,
+"Fixing the baseline").
+
+- [ ] Standard references:
+
 ### A. (group name)
 
 - [ ] A1.

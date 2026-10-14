@@ -19,6 +19,7 @@ OUTPUT_LANGUAGE:   English
 TOTAL_PAGE_BUDGET:
 PER_CHAPTER_MAX:
 BASELINE_HINT:
+STANDARD_REFERENCES:   Hartshorne, Algebraic Geometry
 ```
 
 ### 부속 논문

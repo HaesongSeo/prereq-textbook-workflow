@@ -27,12 +27,17 @@ sections_approved: []
    confirming "nothing" is part of the procedure.)
    If Phase 1 is in progress, also read `PHASE1_PROBE_GUIDE.en.md` at the `Study/`
    root. That file is authoritative on probe selection and K grading.
+   If Phase 4 or 5 is in progress, also read `PHASE45_WRITING_GUIDE.en.md` at the
+   `Study/` root. That file is authoritative on the writing rules (notation,
+   contrastive phrasing, sources, writing in detail).
 3. Run the checks **in this order** (see "Checker scripts" below).
    `sh tex/check.sh` -> `sh md-check.sh` -> `sh tex/notation-check.sh` ->
-   `sh tex/import-check.sh` (when a chapter was imported) -> (the project's own
-   source-number checker)
-   The build comes first because `md-check.sh` reads the `.aux` files. The last
-   three are required to pass by the exit conditions of Phases 4, 5 and 6.
+   `sh tex/style-check.sh` (warnings only) -> `sh tex/import-check.sh` (when a
+   chapter was imported) -> (the project's own source-number checker)
+   The build comes first because `md-check.sh` reads the `.aux` files. The
+   notation, import and source-number checks are required to pass by the exit
+   conditions of Phases 4, 5 and 6; the warnings of `style-check.sh` must all
+   have been read and dealt with.
 4. Continue from the *next action* under "Current state" below.
 
 Example first prompt:
@@ -83,6 +88,7 @@ The build comes first (`md-check.sh` reads the `.aux` files).
 | `sh tex/check.sh` | `tex/` | 1 non-ASCII 2 clean-room build 3 the log (`grep -a`) 4 items missing from a chapter's closing "Summary" table |
 | `sh md-check.sh` | the shared policy files at the root + **every `.md` under the project** (including `refs/NOTES.md`) | 1 project macros outside backticks 2 vertical bars inside math in a table row 3 table column counts 4 inline math not closed on its line 5 our item numbers against `tex/**/*.aux` (both the Korean form and the abbreviated English form) 6 leaked `\uXXXX` escapes 7 the approval columns of "Chapter status" and "Close-reading status" against the approval log 8 whether a grade column lost its codes and became prose 9 the state block against the approval log 10 `SSOT-COPY` tables against their authority |
 | `sh tex/notation-check.sh` | **every `.tex` under `tex/`** (preface and appendices included) | places where a `notation.sty` macro's expansion was typed by hand |
+| `sh tex/style-check.sh` | **every `.tex` under `tex/`** (except the chapter templates `ch00`/`sec00` and `tex/backup/`) | **warns only, never fails.** (1) contrastive phrases (2) phrases that skip a step (3) a notation paragraph at the head of a chapter, and forward references (4) the list of "throughout the book" declarations (5) claims of completeness inside verification marks. The rules are in `PHASE45_WRITING_GUIDE.en.md` |
 | `sh tex/import-check.sh` | `tex/IMPORTS` | whether a chapter forked from another project **has moved on either side** |
 
 **Build one more per project: the source theorem-number checker.** Source item
@@ -99,6 +105,9 @@ filtering decides whether the checker lives or dies.**
 - Judge a `\cite[...]{...}` **only when the key is the target paper.**
 - **Strip every `\cite[...]{...}` before scanning the prose.** Otherwise
   another work's locator reads as body text.
+- If you defined an abbreviating macro that wraps a citation in `notation.sty`,
+  **strip it too.** Add each new one to the checker -- if one is missed, another
+  work's numbers inside it read as the target paper's.
 
 ## Build verification rules
 
