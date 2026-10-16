@@ -61,7 +61,7 @@ verification rules of `CLAUDE.en.md` win.
 - **Put a definition where its object actually arises.** Do not define symbols
   in a block at the head of a chapter or of the book and then use them in the
   text without definition. The only exceptions are the fixings of §2.2 and
-  §2.4.
+  §2.4, and the introduction chapter (§2.9).
 
 ### 2.2 Symbols fixed for the whole book
 
@@ -144,6 +144,40 @@ verification rules of `CLAUDE.en.md` win.
   symbol. A recall is a phrase and a `\ref`; it does not repeat the account of
   the object.
 
+### 2.9 The exception for the introduction chapter
+
+The first chapter of Part II reads the paper's introduction and, with it,
+gives the map of the main theorem and its proof (`CLAUDE.en.md` Phase 5, "The
+introduction chapter"). The map uses the notation and the definitions of the
+whole paper, so **in this chapter only** symbols and definitions are handled as
+below, in place of §2.1, §2.3 and §2.4.
+
+- **The symbols and definitions of Part I are recalled at the start of the
+  chapter.** Everything this chapter uses from Part I, however many sections
+  use it, is gathered in one paragraph at the head. The form is the recall of
+  §2.3 -- a phrase for the meaning and a `\ref` -- and symbols fixed for the
+  whole book (§2.2) are left out.
+- **Symbols and definitions defined in another close-reading chapter are cited
+  instead of defined.** At the first use, give the meaning in one phrase, point
+  at the definition in the source with `\cite` and at the place in the book
+  that defines it with `\ref`. This chapter is written last among the
+  close-reading chapters, so there is always a place to `\ref`. What the paper
+  sets up in its introduction and uses in later sections falls here too -- in
+  the book, the first close-reading chapter to use it defines it (last item).
+- **Statements (§2.7).** The recall at the head counts as fixing for the whole
+  chapter. When a symbol or a definition of another close-reading chapter
+  appears in a statement, cite it immediately before the statement.
+- Symbols and definitions used only in this chapter are defined where they are
+  used, as usual.
+- Still in force: fixing for the whole book (§2.2), one meaning per symbol
+  (§2.5), correspondence footnotes (§2.6).
+- **The exception ends with this chapter.** No other chapter leans on it: none
+  omits its own recall on the strength of this chapter's opening recall, and
+  none points at what this chapter defines. Symbols, definitions and hypotheses
+  that the paper sets up in its introduction are defined by the first
+  close-reading chapter that uses them (in reading order, from the one after
+  this chapter).
+
 ---
 
 ## 3. Contrastive phrasing
@@ -220,6 +254,12 @@ verification rules of `CLAUDE.en.md` win.
   exceeded, only record it in `progress.md`, "Measured length", and do not
   report it. Do not split a chapter because of its length -- a split is decided
   where the discussion really divides.
+- **The proof map of the introduction chapter.** The map proves nothing, so
+  criteria 2 to 6 above do not apply to it. For each step, write the
+  **geometric meaning** before the details -- what is built, what it
+  guarantees, and so what the next step becomes able to do. Write so that a
+  reader opening the paper for the first time can follow. Criteria 1 and 7
+  still apply.
 
 ---
 
@@ -229,6 +269,11 @@ The paper's proofs are moved into a `proof` environment. They are not
 reconstructed inside a `remark`. An argument we restored because the paper did
 not have it also goes in a `proof` environment, with `\OWNPROOF` attached --
 what distinguishes the paper's from ours is the mark, not the environment.
+
+The proof map of the introduction chapter is not a proof, so it does not go in
+a `proof` environment; it is written as a numbered list of steps. The map
+carries no verification mark either (`CLAUDE.en.md` Phase 5, "The introduction
+chapter").
 
 `remark` is used for three things only.
 
@@ -267,11 +312,18 @@ before a Phase 5 chapter is final.
 - [ ] Symbols that differ from the target paper's or a cited work's carry a
       correspondence footnote (§2.6)
 - [ ] Every statement can be read on its own (§2.7)
+- [ ] In the introduction chapter: the symbols and definitions of Part I are
+      recalled at the head, and every symbol or definition defined in another
+      close-reading chapter has a phrase for its meaning, its place in the
+      source and its place in the book (§2.9)
 - [ ] Each remaining contrast has passed the test of §3
 - [ ] Sources follow §4
 - [ ] Proofs and computations meet the criteria of §5
 - [ ] Proofs are in `proof` environments, and `remark` is used only for the three
       purposes of §6
+- [ ] In the introduction chapter: the proof map is a list of steps outside any
+      `proof` environment, and each step gives its geometric meaning first
+      (§5, §6)
 - [ ] **Every warning of `sh tex/style-check.sh` has been read.** The check never
       fails; it only warns. For each warning, fix it or confirm a reason to keep
       it by the tests of §3 and §5

@@ -54,9 +54,13 @@ KIND = r'(?:thm|prop|lem|cor|def|defn|ex|rem|rmk|conv)'
 # as a fact about the book but was only ever a statement about the glob.
 # paper/sec00-example.tex carries the same summary table, so the omission was
 # plain once looked at.
+#
+# Templates are excluded by their full name.  A bare "00-" would drop a real
+# chapter too: a paper whose introduction is section 0, or unnumbered, gives
+# paper/sec00-<slug>.tex (CLAUDE.md, Phase 5).
 files = [f for f in sorted(glob.glob('chapters/**/*.tex', recursive=True)
                            + glob.glob('paper/**/*.tex', recursive=True))
-         if not re.match(r'(ch|sec)00-', os.path.basename(f))]  # 00 is a template
+         if not re.match(r'(ch|sec)00-example', os.path.basename(f))]
 missing_total = notable = 0
 for f in files:
     src = open(f, encoding='utf-8', errors='replace').read()

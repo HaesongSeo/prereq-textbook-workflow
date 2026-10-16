@@ -1,0 +1,123 @@
+% paper/sec00-example-overview.tex -- FORMAT EXAMPLE for the reading of the
+% paper's introduction, not a section of any book.
+%
+% The first chapter of Part II reads the introduction and, in doing so, gives
+% the map of the paper: what the main theorem says and how its proof runs
+% (CLAUDE.md, Phase 5, "the reading of the introduction").  It comes FIRST in
+% the reading order and is WRITTEN LAST, after every other Part II chapter has
+% been approved, so that each step of the map can point at the chapter that
+% proves it.  Its chapter number is reserved in main.tex from the start.
+%
+% Copy this file to paper/secNN-SLUG.tex, NN being the number of the
+% introduction in the paper (00 if it is section 0 or unnumbered).
+%
+% Notation and definitions are the one place where this chapter departs from
+% the writing guide (PHASE45_WRITING_GUIDE.md, section 2.9):
+%   - everything it uses from Part I is recalled at the start, in one place;
+%   - anything defined in another Part II chapter is not defined here: at its
+%     first use it gets one phrase for its meaning, the paper's location by
+%     \cite, and the book's location by \ref.
+% The exception ends with this chapter.  No other chapter leans on it.
+%
+% main.tex deliberately does NOT \include it.
+%
+% ASCII only under tex/.
+\chapter{<Title: the main theorem and the shape of its proof>}
+\chaptermark{<Short running head>}
+\label{ch:read-intro}
+
+\begin{chapterheader}
+\textbf{Purpose.}
+To read \S<n> of the paper, and with it the map of the whole paper: what the
+main theorem says, and the steps of its proof, each with the chapter of this
+part where it is proved.
+
+\medskip
+\textbf{Assumed.}
+Chapter~\ref{ch:SLUG} for <what>; <further preparatory chapters, each with
+what it supplies>.  Objects that the paper defines in its later sections are
+used here before their definition, each with a pointer to the chapter of this
+part that defines it.
+
+\medskip
+\textbf{Supports.}
+\S<n> of the paper, pp.~<a>--<b>.  The chapters that follow in this part each
+carry out one or more steps of the map in
+Section~\ref{sec:read-intro-map}.
+
+\medskip
+\textbf{How far things are proved.}
+The map proves nothing; each step names the chapter that proves it.  <Say
+whose the steps are: the paper's own outline, unfolded, or ours -- if the
+introduction gives no outline, or the steps are cut differently from it, say
+so here.>
+\end{chapterheader}
+
+% The recall of Part I: every symbol and notion of Part I used anywhere in this
+% chapter, in this one paragraph, however many sections use it.  The form of a
+% recall is unchanged -- one phrase for the meaning and a \ref.  Symbols fixed
+% throughout the book are not repeated.
+\noindent\textbf{From the preparatory chapters.}
+<$X$ denotes <one phrase>, as in Definition~\ref{def:SLUG}; <...>.>
+
+%% =====================================================================
+\section{<The main theorem>}
+\label{sec:read-intro-statement}
+
+% Sections follow the order of the introduction.  Its other parts --
+% motivation, earlier results, the paper's comments on its method -- are read
+% in sections of their own, as any section of the paper is read.
+
+<A symbol or a notion defined in another chapter of this part is cited at its
+first use -- just before the statement, if the statement needs it: a
+\emph{<notion>} is <one phrase for its meaning>
+(\cite[Def.~<n.m>]{<PAPER>}; Definition~\ref{def:read-SLUG}).>
+
+\begin{thm}[{\cite[Thm.~<n.m>]{<PAPER>}}]
+\label{thm:read-intro-main}
+<The main theorem, stated exactly, in the notation of the chapter that proves
+it.  It is proved in Chapter~\ref{ch:read-SLUG}.>
+\end{thm}
+
+<If the paper has several main results, state each, and say which follows from
+which.>
+
+%% =====================================================================
+\section{<The shape of the proof>}
+\label{sec:read-intro-map}
+
+% The map is a numbered list, outside any proof environment, and carries no
+% verification mark: nothing is proved here (PHASE45_WRITING_GUIDE.md,
+% sections 5 and 6).  For each step, the geometric meaning comes first --
+% what is built, what it guarantees, and what that lets the next step do --
+% written for a reader who opens the paper for the first time.
+
+<One paragraph on the strategy as a whole, before the steps.>
+
+\begin{enumerate}
+\item \emph{<What the step builds, or what it reduces to.>}
+  <Its geometric meaning: what is built and what it guarantees.  Why it
+  holds, in one paragraph.>
+  Proved in \cite[\S<k>]{<PAPER>}; Chapter~\ref{ch:read-SLUG}.
+\item \emph{<The next step.>}
+  <...>
+\end{enumerate}
+
+%% =====================================================================
+\section{Summary: where each statement is proved}
+\label{sec:read-intro-summary}
+
+% The third column points at where each item is PROVED: the items of this
+% chapter are the statements that the rest of Part II proves.
+\begin{center}
+\small
+\begin{tabular}{@{}L{4.6cm}lL{5.9cm}@{}}
+\toprule
+Item & Here & Proved in \\
+\midrule
+<the main theorem>
+  & \ref{thm:read-intro-main}
+  & Chapter~\ref{ch:read-SLUG}; \cite[\S<k>]{<PAPER>} \\
+\bottomrule
+\end{tabular}
+\end{center}

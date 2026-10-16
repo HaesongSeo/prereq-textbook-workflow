@@ -88,7 +88,7 @@ The build comes first (`md-check.sh` reads the `.aux` files).
 | `sh tex/check.sh` | `tex/` | 1 non-ASCII 2 clean-room build 3 the log (`grep -a`) 4 items missing from a chapter's closing "Summary" table |
 | `sh md-check.sh` | the shared policy files at the root + **every `.md` under the project** (including `refs/NOTES.md`) | 1 project macros outside backticks 2 vertical bars inside math in a table row 3 table column counts 4 inline math not closed on its line 5 our item numbers against `tex/**/*.aux` (both the Korean form and the abbreviated English form) 6 leaked `\uXXXX` escapes 7 the approval columns of "Chapter status" and "Close-reading status" against the approval log 8 whether a grade column lost its codes and became prose 9 the state block against the approval log 10 `SSOT-COPY` tables against their authority |
 | `sh tex/notation-check.sh` | **every `.tex` under `tex/`** (preface and appendices included) | places where a `notation.sty` macro's expansion was typed by hand |
-| `sh tex/style-check.sh` | **every `.tex` under `tex/`** (except the chapter templates `ch00`/`sec00` and `tex/backup/`) | **warns only, never fails.** (1) contrastive phrases (2) phrases that skip a step (3) a notation paragraph at the head of a chapter, and forward references (4) the list of "throughout the book" declarations (5) claims of completeness inside verification marks. The rules are in `PHASE45_WRITING_GUIDE.en.md` |
+| `sh tex/style-check.sh` | **every `.tex` under `tex/`** (except the chapter templates `ch00-example*`/`sec00-example*` and `tex/backup/`) | **warns only, never fails.** (1) contrastive phrases (2) phrases that skip a step (3) a notation paragraph at the head of a chapter, and forward references (4) the list of "throughout the book" declarations (5) claims of completeness inside verification marks. The rules are in `PHASE45_WRITING_GUIDE.en.md` |
 | `sh tex/import-check.sh` | `tex/IMPORTS` | whether a chapter forked from another project **has moved on either side** |
 
 **Build one more per project: the source theorem-number checker.** Source item
@@ -127,8 +127,10 @@ box (Purpose / Assumed / Supports / How far things are proved) and the closing
 whole of the form. **That table is the tool of the chapter check**: every
 numbered item above must appear in it, and each row must point at where the
 item is used. An item with nowhere to point is deleted, or declared in the text
-as intuition the reader needs. The two example files are not included in
-`main.tex`.
+as intuition the reader needs. The introduction chapter alone copies
+`tex/paper/sec00-example-overview.tex` -- its table has "Proved in" as the third
+column, and each row points at where the item is proved. The three example
+files are not included in `main.tex`.
 
 Build artefacts (`.aux`, `.log`, `.toc`, `.bbl` and so on) **are not deleted.**
 `md-check.sh` reads the `.aux` files, and the length measurement reads

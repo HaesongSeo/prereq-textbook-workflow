@@ -42,8 +42,17 @@
 
 \part{Reading the paper}
 % Phase 5.  The order is NOT necessarily the paper's; see spec.md,
-% "Phase 5 order".  The format to copy is paper/sec00-example.tex.
-% \include{paper/sec01-<slug>}
+% "Phase 5 order" -- with one fixed point: the reading of the introduction
+% comes first.  That chapter is WRITTEN LAST (CLAUDE.md, Phase 5), so its
+% number is reserved from the start: uncomment the \addtocounter line when
+% Part II begins, and replace it by the \include of the introduction once that
+% chapter is written.  Slipping the chapter in at the front afterwards would
+% shift every Part II number, and the item numbers quoted in the management
+% files would silently point at other items.
+% The format to copy is paper/sec00-example.tex; for the introduction,
+% paper/sec00-example-overview.tex.
+% \addtocounter{chapter}{1}% reserved for the reading of the introduction
+% \include{paper/secNN-<slug>}
 
 % \part{Appendices}
 \appendix

@@ -552,6 +552,9 @@ the paper has already written.**
   the discussion really divides, and that only becomes visible on reading it.
   Decide then and split into `sec05a` / `sec05b` (Phase 5, "The number in the
   file name"). Length alone is never a reason to split.
+- **The introduction is always in the close-reading scope, and first in the
+  reading order** (Phase 5, "The introduction chapter"). Its target page count
+  is, as for any section, the introduction's page count in the source.
 - The target goes in `spec.md` under "Phase 5 (close reading): order and
   length"; the measurement goes in `progress.md` under "Close-reading status".
 - **In the same turn the reading plan is written, create one row per section in
@@ -595,6 +598,8 @@ only record it.
       depth)
 - [ ] Every section in the close-reading scope has **the source page count as
       its target** (`spec.md`, "Phase 5: order and length")
+- [ ] The introduction is in the close-reading scope, first in the reading
+      order
 - [ ] `progress.md`, "Close-reading status" has **a row for every section in
       the close-reading scope, in reading order** (status ☐, length blank)
 
@@ -734,9 +739,66 @@ section really divides in two, split it into `secNNa` / `secNNb`. Length alone
 is never a reason (`PER_CHAPTER_MAX` is a reference value). Do not create a
 section that is not in the paper (a toolbox we assembled, say).
 
+### The introduction chapter -- the main theorem and the map of its proof
+
+The first chapter of Part II reads the paper's introduction, and there it gives
+**what the main theorem is and how its proof proceeds**. The reader enters Part
+II through this chapter and holds a map of the whole paper before reading the
+close-reading chapters that follow.
+
+- **First in reading order, last in writing order.** Write it after every other
+  close-reading chapter has been approved. The map can be drawn accurately only
+  after the whole proof has been read, and pointing with `\ref` at the chapter
+  of the book where each step is proved needs those chapters to exist first.
+- **Reserve its chapter number in advance.** When Part II begins, reserve one
+  chapter number at its place in `main.tex` (see the comment in the template
+  `main.tex`), and replace that line by the `\include` once the chapter is
+  written. Slipping it in at the front at the end would shift the number of
+  every later chapter, and the Part II item numbers recorded in the management
+  files would point at other items. `md-check.sh` item 5 compares only the number
+  and the kind, so where a shifted number lands on an item of the same kind it
+  passes unnoticed.
+- **What it contains.**
+  - Every main result the introduction states. State each exactly in a theorem
+    environment and cite it by the source's number. Point with `\ref` at the
+    place in the close-reading chapter where it is proved, and if that chapter
+    states it too, use the same notation. If there are several main results,
+    show which follows from which.
+  - **The map of the proof.** A numbered list of steps. For each step, write
+    what it claims, why it holds (one paragraph), and where it is proved (the
+    place in the source and the chapter of the book). Write the geometric
+    meaning before the details, so that a reader opening the paper for the
+    first time can follow (how to write it: `PHASE45_WRITING_GUIDE.en.md` §5,
+    §6).
+  - The rest of the introduction -- motivation, earlier results, the paper's
+    remarks on its method -- is read as any other section is.
+- **The map proves nothing.** It has no `proof` environment and no verification
+  mark. If the paper's introduction gives an outline of the proof, unfold it;
+  if it gives none, or the steps are cut differently from it, say so in the
+  header box under "How far things are proved".
+- **Symbols and definitions are handled differently in this chapter only.**
+  Those of Part I are recalled at the start of the chapter; those defined in
+  another close-reading chapter are cited instead of defined. The authority is
+  `PHASE45_WRITING_GUIDE.en.md` §2.9. **No other chapter leans on this one** --
+  symbols and hypotheses the paper sets up in its introduction are defined by
+  the first close-reading chapter that uses them.
+- **The closing table.** The third column of the "Summary" table is "Proved
+  in": the items of this chapter point at where they are proved, in place of
+  where they are used.
+- **Distinct from the preface.** This chapter gives the order of the argument;
+  the preface (Phase 6) gives the order of reading the book and its reasons.
+- **The file.** Its name follows the introduction's section number like any
+  other chapter; if the introduction is §0 or unnumbered, it is
+  `sec00-<slug>`. Start by copying `tex/paper/sec00-example-overview.tex`.
+
 ### Exit conditions
 
 - [ ] Every section approved as in scope is in `tex/paper/` and approved
+- [ ] The introduction chapter was written **after every other close-reading
+      chapter was approved**, has been approved, and is first in the reading
+      order. Each step of the map is linked with `\ref` to where it is proved,
+      and the reserved line in `main.tex` has been replaced by that chapter's
+      `\include`
 - [ ] Each section **really links** to the earlier chapters with `\ref` (not
       merely in words)
 - [ ] Restored arguments carry `\OWNPROOF`; verifications and auxiliary facts
@@ -1011,7 +1073,8 @@ everything:
 - Using a symbol before it is defined, using another chapter's or another
   section's symbol without recalling it, fixing for the whole book a symbol that
   does not qualify, defining symbols in a block at the head of a chapter or of
-  the book (`PHASE45_WRITING_GUIDE.en.md` §2)
+  the book (`PHASE45_WRITING_GUIDE.en.md` §2; the exception for the
+  introduction chapter is §2.9 of the same file)
 - Contrastive phrasing that is not mathematically needed (same file, §3)
 - Letting "standard" or "well known" stand in for a citation; putting a refuted
   statement in a theorem environment (same file, §4)

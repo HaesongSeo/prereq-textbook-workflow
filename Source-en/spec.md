@@ -132,6 +132,11 @@ macros.
 > toolbox reads better placed last -- in its own place it has no motivation,
 > and it only becomes recognisable after seeing where it is used.
 >
+> **The introduction comes first.** The introduction chapter doubles as the map
+> of the main theorem and its proof; it is first in reading order and last in
+> writing order (`CLAUDE.en.md` Phase 5, "The introduction chapter"). Note in
+> "Notes" that it is written last.
+>
 > **Length.** The target is **the section's page count in the source, as it
 > is** (`CLAUDE.en.md` Phase 2, "The length of Part II"). This total is **not
 > subject to a budget** -- `TOTAL_PAGE_BUDGET` covers only the preparatory

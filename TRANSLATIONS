@@ -8,12 +8,12 @@
 # 둔다. 한국어판이 바뀌면 검사가 실패한다 — 영어판을 맞춘 뒤 해시를 갱신한다.
 
 README.en.md | README.md | 9079fdea5bad9a7507f44c01a56f75b3af1d587885c11e7b62d50ee6ee80a36e | 2026-10-14
-CLAUDE.en.md | CLAUDE.md | e3adb4b840728ef711a83ad0bd11c2d3588936f447ff35aac71fb7116083a5da | 2026-10-14
+CLAUDE.en.md | CLAUDE.md | 7016c82b168d0a3203216391ecec24b6a8e19c2a6de79fac86e25260452b01d8 | 2026-10-16
 PHASE1_PROBE_GUIDE.en.md | PHASE1_PROBE_GUIDE.md | 54f3ae6bb2955ab208a283fcef64d69333412800fcbcd590527b27126670e393 | 2026-10-14
-PHASE45_WRITING_GUIDE.en.md | PHASE45_WRITING_GUIDE.md | adb6364b8045c9a67486cc18d9b71b33b04d186cab086b64eb03985f9e4a55c3 | 2026-10-14
-Source-en/spec.md | Source/spec.md | 90e687698e6ee02af8c6ef679ecdafea9e9a75436600dbf889a54fb44264d811 | 2026-10-14
+PHASE45_WRITING_GUIDE.en.md | PHASE45_WRITING_GUIDE.md | e104dac942b6c41206e662ae71641619443d36246c2af6acfc5f6f012a28d670 | 2026-10-16
+Source-en/spec.md | Source/spec.md | 944346cfc7351d05af65058ecf9296a05e6333f1b086bf97e05d9d9ff240322a | 2026-10-16
 Source-en/background.md | Source/background.md | c9478ae426e8c34465d0eba26f4ad2626b852ef2e50652b2b4a338e9b425c6d6 | 2026-10-14
-Source-en/progress.md | Source/progress.md | 0f74656ae41deb04f2d237463f51b94c59bfe55b948df9dda1ff19b8c803801a | 2026-10-14
+Source-en/progress.md | Source/progress.md | 00e4ac3da458e5f761c85fbb3debfdda4cba5b86495cdf0932dd4229393c6318 | 2026-10-16
 Source-en/refs/NOTES.md | Source/refs/NOTES.md | 9348334189b8b5252b22d4b72169cd99f40c20dc50d7a5055b5c6558dc2da347 | 2026-08-22
 Source-en/tex/IMPORTS | Source/tex/IMPORTS | c18afce3e7775431a15b2084b15d2f44f5b7dddd49afbba1888f499568fae537 | 2026-08-22
 Source-en/tex/IMPORT-HEADER.txt | Source/tex/IMPORT-HEADER.txt | 1d91776ab2b15c8642019bcdd9a0e636bc7b30cd719c1d95bdabaab2820013d0 | 2026-08-22

@@ -25,7 +25,10 @@
 #                                                              (section 5)
 #
 # Scope: every .tex under tex/, recursively, except the chapter templates
-# (ch00-*, sec00-*) and anything under tex/backup/.  Comments are not scanned.
+# (ch00-example*, sec00-example*) and anything under tex/backup/.  The
+# templates are matched by their full name: a paper whose introduction is
+# section 0 has a real chapter paper/sec00-<slug>.tex.  Comments are not
+# scanned.
 # Phrases are matched across line breaks.
 #
 # Run from the project root:  sh tex/style-check.sh
@@ -72,7 +75,7 @@ files = []
 for f in sorted(glob.glob('tex/**/*.tex', recursive=True)):
     if f.startswith('tex/backup/'):
         continue
-    if re.match(r'(ch|sec)00-', os.path.basename(f)):
+    if re.match(r'(ch|sec)00-example', os.path.basename(f)):
         continue
     files.append(f)
 

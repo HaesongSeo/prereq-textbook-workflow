@@ -78,7 +78,7 @@ sections_approved: []
 | `sh tex/check.sh` | `tex/` | ① 비ASCII ② clean-room 빌드 ③ 로그(`grep -a`) ④ 장 끝 「Summary」 표에 빠진 항목 |
 | `sh md-check.sh` | 루트의 공유 정책 파일 + **프로젝트 아래 모든 `.md`** (`refs/NOTES.md` 포함) | ① 백틱 밖 프로젝트 매크로 ② 표 안 수식의 세로줄 ③ 표 열 개수 ④ 한 줄에서 안 닫힌 인라인 수식 ⑤ 우리 항목 번호를 `tex/**/*.aux`와 대조 (한국어 「`chNN` 비고 N.N」과 영어 약식 「`ChNN` Rmk N.N」 두 형태 모두) ⑥ `\uXXXX` 이스케이프 누출 ⑦ 「챕터 진행 현황」·「논문 정독 현황」의 승인 열 ↔ 승인 로그 ⑧ 등급 열(`사용 방식`·`직접`·`추정`·`확정 K`·`깊이`)이 기호를 잃고 평문으로 풀어 쓰였는가 ⑨ 상태 블록 ↔ 승인 로그 ⑩ `SSOT-COPY` 표 ↔ 정본 |
 | `sh tex/notation-check.sh` | **`tex/` 아래 모든 `.tex`** (머리말·부록 포함) | `notation.sty` 매크로의 전개형을 손으로 쓴 곳 |
-| `sh tex/style-check.sh` | **`tex/` 아래 모든 `.tex`** (장 템플릿 `ch00`·`sec00`과 `tex/backup/` 제외) | **경고만 하고 실패하지 않는다.** ① 대비 표현 ② 단계를 건너뛰는 표현 ③ 장 첫머리의 기호 문단과 전방 참조 ④ 「throughout the book」 선언의 목록 ⑤ 검산 표시 안의 완결성 주장. 규칙은 `PHASE45_WRITING_GUIDE.md` |
+| `sh tex/style-check.sh` | **`tex/` 아래 모든 `.tex`** (장 템플릿 `ch00-example*`·`sec00-example*`과 `tex/backup/` 제외) | **경고만 하고 실패하지 않는다.** ① 대비 표현 ② 단계를 건너뛰는 표현 ③ 장 첫머리의 기호 문단과 전방 참조 ④ 「throughout the book」 선언의 목록 ⑤ 검산 표시 안의 완결성 주장. 규칙은 `PHASE45_WRITING_GUIDE.md` |
 | `sh tex/import-check.sh` | `tex/IMPORTS` | 다른 프로젝트에서 가져온 장의 **원본이 바뀌었는가** |
 
 **프로젝트별로 하나 더 만든다: 원문 정리 번호 대조기.** 본문이 텍스트로 적은
@@ -111,7 +111,9 @@ How far things are proved)와 맨 끝의 「Summary: where this chapter is used�
 표(Item / Here / Used in)가 형식의 전부다. **그 표가 챕터 확정 검사의 도구다**: 위에서 번호가
 붙은 항목은 전부 표에 나타나야 하고, 각 행은 그것이 쓰이는 자리를 가리켜야
 한다. 가리킬 곳이 없는 항목은 지우거나, 본문에서 필요한 직관이라고 밝힌다.
-두 예시 파일은 `main.tex`에 포함되어 있지 않다.
+서론 정독 장만은 `tex/paper/sec00-example-overview.tex`를 복사한다 — 그 장의
+표는 셋째 열이 「Proved in」이고, 각 행은 그 항목이 증명되는 자리를 가리킨다.
+세 예시 파일은 `main.tex`에 포함되어 있지 않다.
 
 빌드 부산물(`.aux`, `.log`, `.toc`, `.bbl` 등)은 **지우지 않는다.**
 `md-check.sh`가 `.aux`를 읽고, 분량 실측이 `main.toc`와 `main.log`를 읽는다.
